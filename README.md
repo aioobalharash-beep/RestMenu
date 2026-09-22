@@ -9,7 +9,15 @@ reorder, and edit — changes go live on the menu instantly.
 
 Built with **Next.js (App Router) + TypeScript + Tailwind CSS v4**, with a data
 layer that runs on a **local JSON file** for zero-setup development and on
-**Vercel Postgres + Vercel Blob** in production — no code changes, just env vars.
+**Postgres + S3-compatible storage** in production — no code changes, just env vars.
+
+**White-label:** all branding (name, logo, accent colour, contact links) lives in
+one file — [`src/brand.config.ts`](./src/brand.config.ts). To spin up a new client,
+see **[ONBOARDING.md](./ONBOARDING.md)**.
+
+**Free hosting stack:** Netlify (host) + Neon (Postgres) + Cloudflare R2 (images).
+Also deployable to Vercel (Postgres + Blob). The image uploader auto-detects the
+provider from env vars (S3/R2 → Vercel Blob → local files).
 
 ---
 

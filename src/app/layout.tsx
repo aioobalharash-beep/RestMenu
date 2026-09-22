@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
+import { brand } from "@/brand.config";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -18,7 +19,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "RestMenu — The Menu",
+  title: `${brand.name} — The Menu`,
   description:
     "A quiet, beautiful menu. Scroll through each course; swipe between dishes.",
 };
@@ -36,8 +37,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Per-client accent, injected as CSS variables so the whole palette follows.
+  const brandVars = {
+    "--color-saffron": brand.accent,
+    "--color-saffron-deep": brand.accentDeep,
+  } as React.CSSProperties;
+
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${inter.variable}`}
+      style={brandVars}
+    >
       <body>{children}</body>
     </html>
   );

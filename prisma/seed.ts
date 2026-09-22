@@ -4,6 +4,16 @@ import { sampleMenu } from "../src/lib/store/sample-menu";
 const prisma = new PrismaClient();
 
 async function main() {
+  // IMPORT_MENU=1 (or --force) wipes the existing menu and reloads from code.
+  const force =
+    process.env.IMPORT_MENU === "1" || process.argv.includes("--force");
+
+  if (force) {
+    await prisma.item.deleteMany();
+    await prisma.category.deleteMany();
+    console.log("IMPORT_MENU set — cleared existing menu.");
+  }
+
   const existing = await prisma.category.count();
   if (existing > 0) {
     console.log(`Menu already has ${existing} categories — skipping seed.`);

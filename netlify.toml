@@ -1,0 +1,13 @@
+# Netlify deployment config. The Next.js runtime plugin is auto-installed by
+# Netlify when it detects a Next.js app; this file pins the build + Node version.
+# Set env vars (DATABASE_URL, ADMIN_PASSWORD, SESSION_SECRET, S3_* etc.) in the
+# Netlify dashboard → Site settings → Environment variables.
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
