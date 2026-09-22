@@ -6,8 +6,14 @@
 // NOTE: each variable is referenced statically below so Next.js can inline it.
 
 function firstSet(...vals: (string | undefined)[]): string {
-  for (const v of vals) if (v && v.trim()) return v.trim();
+  for (const v of vals) if (v && v.trim()) return normalizeUrl(v.trim());
   return "";
+}
+
+/** Ensure an external link has a scheme, so it isn't treated as a relative path. */
+function normalizeUrl(v: string): string {
+  if (/^https?:\/\//i.test(v) || v.startsWith("mailto:") || v.startsWith("tel:")) return v;
+  return `https://${v}`;
 }
 
 function waFromPhone(phone?: string): string {
