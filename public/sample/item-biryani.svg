@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <radialGradient id="pl" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#fbf3df"/>
+      <stop offset="100%" stop-color="#eeddb6"/>
+    </radialGradient>
+    <radialGradient id="rim" cx="50%" cy="50%" r="50%">
+      <stop offset="86%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="93%" stop-color="rgba(120,90,50,0.10)"/>
+      <stop offset="100%" stop-color="rgba(120,90,50,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#pl)"/>
+  <circle cx="300" cy="300" r="300" fill="url(#rim)"/>
+  <circle cx="300" cy="300" r="240" fill="none" stroke="rgba(120,90,50,0.10)" stroke-width="2"/><circle cx="298.8" cy="301.5" r="48.2" fill="#e3b84f" opacity="0.92"/><circle cx="325.5" cy="214.6" r="92.5" fill="#d99b3a" opacity="0.92"/><circle cx="254.2" cy="337.3" r="68.4" fill="#8a4b2a" opacity="0.92"/><circle cx="399.2" cy="339.8" r="50.0" fill="#e3b84f" opacity="0.92"/><circle cx="274.9" cy="308.9" r="79.4" fill="#d99b3a" opacity="0.92"/><circle cx="223.1" cy="233.3" r="3.1" fill="rgba(90,120,70,0.7)"/><circle cx="335.9" cy="315.1" r="4.2" fill="rgba(90,120,70,0.7)"/><circle cx="423.9" cy="324.9" r="6.1" fill="rgba(90,120,70,0.7)"/><circle cx="295.1" cy="286.7" r="5.1" fill="rgba(90,120,70,0.7)"/><circle cx="303.5" cy="243.5" r="6.6" fill="rgba(90,120,70,0.7)"/><circle cx="250.5" cy="340.2" r="3.4" fill="rgba(90,120,70,0.7)"/><circle cx="321.6" cy="298.6" r="6.7" fill="rgba(90,120,70,0.7)"/></svg>

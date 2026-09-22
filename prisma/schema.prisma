@@ -1,0 +1,42 @@
+// RestMenu database schema.
+// Production target: Vercel Postgres. Set DATABASE_URL to enable the Prisma-backed
+// store; without it the app falls back to a local JSON store (see src/lib/store).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  // Optional short kicker shown above the title (e.g. "To begin").
+  kicker    String?
+  position  Int      @default(0)
+  items     Item[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([position])
+}
+
+model Item {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  // Price stored in baisa (1 OMR = 1000 baisa) to avoid float rounding.
+  priceBaisa  Int      @default(0)
+  imageUrl    String?
+  position    Int      @default(0)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId, position])
+}

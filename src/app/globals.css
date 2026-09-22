@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/*
+  RestMenu — "light & airy" design system
+  A calm, boutique fine-dining palette: warm porcelain grounds, ink-soft text,
+  a single saffron accent, and generous air. Everything floats.
+*/
+
+@theme {
+  /* Warm porcelain neutrals (not pure grey — a touch of sand) */
+  --color-porcelain: #f6f1e9;
+  --color-porcelain-deep: #efe7db;
+  --color-cream: #fbf8f2;
+  --color-shell: #ffffff;
+
+  /* Ink — warm near-black, never #000 */
+  --color-ink: #23201b;
+  --color-ink-soft: #4a453d;
+  --color-ink-faint: #8a8378;
+
+  /* Saffron accent + supporting warm tones */
+  --color-saffron: #c8873b;
+  --color-saffron-deep: #a86a24;
+  --color-clay: #b9764f;
+  --color-sage: #7d8567;
+
+  /* Lines & fills */
+  --color-hairline: rgba(35, 32, 27, 0.10);
+  --color-hairline-soft: rgba(35, 32, 27, 0.06);
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-pill: 999px;
+
+  --shadow-float: 0 40px 80px -30px rgba(60, 45, 25, 0.35);
+  --shadow-lift: 0 20px 45px -20px rgba(60, 45, 25, 0.25);
+  --shadow-soft: 0 8px 24px -12px rgba(60, 45, 25, 0.18);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-porcelain);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv05";
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-saffron) 28%, transparent);
+    color: var(--color-ink);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  /* Slimmer, warmer scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-ink) 24%, transparent);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+  }
+}
+
+/* ---------- Utilities ---------- */
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+.hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Admin form input */
+.input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-shell);
+  padding: 0.7rem 1rem;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.input::placeholder { color: var(--color-ink-faint); }
+.input:focus-visible {
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-saffron) 22%, transparent);
+}
+
+/* Fluid display type */
+.font-display { font-family: var(--font-display); }
+.font-sans { font-family: var(--font-sans); }
+
+/* Grain / paper texture overlay (very subtle) */
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Focus ring — accessible + on-brand */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-saffron);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
