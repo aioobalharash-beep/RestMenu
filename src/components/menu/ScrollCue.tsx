@@ -1,11 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import SocialLinks from "./SocialLinks";
 
 /**
  * A quiet scroll affordance at the bottom of a scene. Scrolling is continuous,
  * so the real next category flows up into view on its own — no placeholder name.
- * On the last scene it closes out.
+ * The last scene ends with the contact footer.
  */
 export default function ScrollCue({
   isLast,
@@ -17,12 +18,7 @@ export default function ScrollCue({
   const reduce = useReducedMotion();
 
   if (isLast) {
-    return (
-      <div className="flex flex-col items-center gap-1 text-center">
-        <span className="text-[0.62rem] uppercase tracking-[0.3em] text-ink-faint">Fin</span>
-        <span className="font-display text-sm italic text-ink-soft">Bon appétit</span>
-      </div>
-    );
+    return <SocialLinks />;
   }
 
   return (
