@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+// Side effect: backfills DATABASE_URL / DIRECT_URL from provider-specific names.
+import "@/lib/db-env";
 
 // Reuse a single PrismaClient across hot-reloads / serverless invocations.
 const globalForPrisma = globalThis as unknown as {

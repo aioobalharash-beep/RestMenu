@@ -1,3 +1,4 @@
+import { hasDatabase } from "@/lib/db-env";
 import type { MenuStore } from "./types";
 import { JsonMenuStore } from "./json-store";
 
@@ -14,7 +15,7 @@ let cached: MenuStore | null = null;
 export function getStore(): MenuStore {
   if (cached) return cached;
 
-  if (process.env.DATABASE_URL) {
+  if (hasDatabase) {
     // Lazy require keeps @prisma/client out of the dev bundle path.
     const { PrismaMenuStore } = require("./prisma-store") as typeof import("./prisma-store");
     cached = new PrismaMenuStore();

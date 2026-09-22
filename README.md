@@ -66,12 +66,14 @@ Prices are stored as integer **baisa** (1 OMR = 1000 baisa) to avoid float round
 3. **Set env vars** (Settings → Environment Variables):
    - `ADMIN_PASSWORD` — the owner's password,
    - `SESSION_SECRET` — a long random string (`openssl rand -base64 32`).
-4. **Create the tables and seed** (once), with the production `DATABASE_URL` in your shell:
-   ```bash
-   npx prisma db push     # create tables
-   npm run db:seed        # optional: load the sample menu
-   ```
-5. **Deploy.** The build runs `prisma generate && next build` automatically.
+4. **Deploy.** The build runs `prisma generate`, then `scripts/db-setup.mjs`
+   (creates/updates tables via `prisma db push` and seeds the sample menu once —
+   both idempotent), then `next build`. No manual database step is needed; the
+   setup script no-ops automatically when no database is configured.
+
+The provider's connection-string env vars are auto-detected: `DATABASE_URL`,
+or Vercel Postgres' `POSTGRES_PRISMA_URL` / `POSTGRES_URL_NON_POOLING`, or Neon's
+`DATABASE_URL_UNPOOLED`.
 
 The menu is at `/`, the admin at `/admin`.
 
