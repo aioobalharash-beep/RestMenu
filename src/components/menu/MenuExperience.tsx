@@ -77,7 +77,7 @@ export default function MenuExperience({ menu }: { menu: Menu }) {
 
       <div
         ref={scrollRef}
-        className="hide-scrollbar relative z-10 h-[100dvh] snap-y snap-mandatory overflow-y-auto overflow-x-hidden"
+        className="hide-scrollbar relative z-10 h-[100dvh] overflow-y-auto overflow-x-hidden [scroll-behavior:smooth]"
       >
         {menu.map((category, i) => (
           <CategoryScene
