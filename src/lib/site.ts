@@ -1,6 +1,14 @@
 // Contact / social links shown in the menu footer. Set these in the environment
-// (Vercel → Settings → Environment Variables) — they're safe to expose (NEXT_PUBLIC_).
-// Any left unset simply renders as a non-linking placeholder icon.
+// (Vercel → Settings → Environment Variables), then REDEPLOY — NEXT_PUBLIC_* values
+// are baked in at build time, so a rebuild is required for changes to take effect.
+// Any left unset render as a non-linking placeholder icon.
+//
+// NOTE: each variable is referenced statically below so Next.js can inline it.
+
+function firstSet(...vals: (string | undefined)[]): string {
+  for (const v of vals) if (v && v.trim()) return v.trim();
+  return "";
+}
 
 function waFromPhone(phone?: string): string {
   if (!phone) return "";
@@ -9,12 +17,25 @@ function waFromPhone(phone?: string): string {
 }
 
 export const social = {
-  /** A Google Maps (or any) URL to the restaurant's location. */
-  map: process.env.NEXT_PUBLIC_MAP_URL || "",
-  /** Instagram profile URL, e.g. https://instagram.com/yourhandle */
-  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "",
-  /** A full wa.me URL, or set NEXT_PUBLIC_WHATSAPP_PHONE and we build it. */
-  whatsapp:
-    process.env.NEXT_PUBLIC_WHATSAPP_URL ||
+  /** Google Maps (or any) URL to the location. Primary: NEXT_PUBLIC_MAP_URL. */
+  map: firstSet(
+    process.env.NEXT_PUBLIC_MAP_URL,
+    process.env.NEXT_PUBLIC_LOCATION_URL,
+    process.env.NEXT_PUBLIC_LOCATION,
+    process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL,
+  ),
+
+  /** Instagram profile URL. Primary: NEXT_PUBLIC_INSTAGRAM_URL. */
+  instagram: firstSet(
+    process.env.NEXT_PUBLIC_INSTAGRAM_URL,
+    process.env.NEXT_PUBLIC_INSTAGRAM,
+  ),
+
+  /** WhatsApp. A full URL, or a phone number we turn into a wa.me link. */
+  whatsapp: firstSet(
+    process.env.NEXT_PUBLIC_WHATSAPP_URL,
+    process.env.NEXT_PUBLIC_WHATSAPP,
     waFromPhone(process.env.NEXT_PUBLIC_WHATSAPP_PHONE),
+    waFromPhone(process.env.NEXT_PUBLIC_PHONE),
+  ),
 };
