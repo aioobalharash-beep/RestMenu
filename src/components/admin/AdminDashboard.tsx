@@ -22,7 +22,6 @@ export default function AdminDashboard({
   const [editor, setEditor] = useState<EditorState>(null);
   const [toast, setToast] = useState<Toast>(null);
   const [newName, setNewName] = useState("");
-  const [newKicker, setNewKicker] = useState("");
   const [addingCategory, setAddingCategory] = useState(false);
 
   const notify = useCallback((msg: string, tone: "ok" | "err" = "ok") => {
@@ -48,10 +47,9 @@ export default function AdminDashboard({
     if (!name) return;
     setAddingCategory(true);
     try {
-      const category = await api.createCategory({ name, kicker: newKicker.trim() || null });
+      const category = await api.createCategory({ name, kicker: null });
       setCats((c) => [...c, category]);
       setNewName("");
-      setNewKicker("");
       notify("Category added.");
     } catch (e) {
       notify(e instanceof Error ? e.message : "Could not add category.", "err");
@@ -209,13 +207,7 @@ export default function AdminDashboard({
         {/* Add category */}
         <div className="mt-5 rounded-2xl border border-dashed border-hairline bg-cream/50 p-5">
           <h3 className="font-display text-lg text-ink">Add a course</h3>
-          <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
-            <input
-              value={newKicker}
-              onChange={(e) => setNewKicker(e.target.value)}
-              placeholder="Kicker (optional)"
-              className="input"
-            />
+          <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]">
             <input
               value={newName}
               onChange={(e) => setNewName(e.target.value)}

@@ -30,7 +30,7 @@ const CategoryScene = forwardRef<
       aria-label={category.name}
     >
       <div className="flex w-full flex-1 flex-col items-center justify-center gap-4 sm:gap-7">
-        <CategoryTitle name={category.name} kicker={category.kicker} active={active} />
+        <CategoryTitle name={category.name} active={active} />
 
         {item ? (
           <>

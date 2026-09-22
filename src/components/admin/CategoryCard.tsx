@@ -31,11 +31,10 @@ export default function CategoryCard({
 }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(category.name);
-  const [kicker, setKicker] = useState(category.kicker ?? "");
 
   function save() {
     if (!name.trim()) return;
-    onRename(name.trim(), kicker.trim() || null);
+    onRename(name.trim(), null);
     setEditing(false);
   }
 
@@ -51,12 +50,6 @@ export default function CategoryCard({
         {editing ? (
           <div className="flex-1">
             <input
-              value={kicker}
-              onChange={(e) => setKicker(e.target.value)}
-              placeholder="Kicker (optional) — e.g. To begin"
-              className="input mb-2 text-sm"
-            />
-            <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Category name"
@@ -71,7 +64,6 @@ export default function CategoryCard({
               <button
                 onClick={() => {
                   setName(category.name);
-                  setKicker(category.kicker ?? "");
                   setEditing(false);
                 }}
                 className="focus-ring rounded-lg px-3 py-1.5 text-xs font-medium text-ink-soft hover:text-ink"
@@ -82,11 +74,6 @@ export default function CategoryCard({
           </div>
         ) : (
           <div className="flex-1">
-            {category.kicker && (
-              <span className="text-[0.65rem] uppercase tracking-[0.24em] text-saffron-deep">
-                {category.kicker}
-              </span>
-            )}
             <h2 className="font-display text-2xl leading-tight text-ink">{category.name}</h2>
             <p className="mt-0.5 text-xs text-ink-faint">
               {category.items.length} {category.items.length === 1 ? "dish" : "dishes"}

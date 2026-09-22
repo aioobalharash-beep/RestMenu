@@ -11,7 +11,7 @@ export const sampleMenu: Menu = [
   {
     id: "cat-appetisers",
     name: "Appetisers",
-    kicker: "To begin",
+    kicker: null,
     position: 0,
     items: [
       {
@@ -49,7 +49,7 @@ export const sampleMenu: Menu = [
   {
     id: "cat-main",
     name: "Main Dishes",
-    kicker: "The heart of it",
+    kicker: null,
     position: 1,
     items: [
       {
@@ -87,7 +87,7 @@ export const sampleMenu: Menu = [
   {
     id: "cat-rice",
     name: "Rice Meals",
-    kicker: "Slow & fragrant",
+    kicker: null,
     position: 2,
     items: [
       {
@@ -115,7 +115,7 @@ export const sampleMenu: Menu = [
   {
     id: "cat-hot-drinks",
     name: "Hot Drinks",
-    kicker: "To linger",
+    kicker: null,
     position: 3,
     items: [
       {
