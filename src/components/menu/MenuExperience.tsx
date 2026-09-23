@@ -7,13 +7,17 @@ import FloatingLogo from "./FloatingLogo";
 import CategoryScene from "./CategoryScene";
 import ProgressRail from "./ProgressRail";
 import LanguageToggle from "./LanguageToggle";
+import CartWidget from "./CartWidget";
 import { LanguageProvider, useLang } from "./LanguageContext";
+import { CartProvider } from "./CartContext";
+import { brand } from "@/brand.config";
 
-/** Public entry: provides language context around the scrolling menu. */
+/** Public entry: provides language (and, when enabled, cart) context. */
 export default function MenuExperience({ menu }: { menu: Menu }) {
+  const shell = <MenuShell menu={menu} />;
   return (
     <LanguageProvider>
-      <MenuShell menu={menu} />
+      {brand.features.ordering ? <CartProvider>{shell}</CartProvider> : shell}
     </LanguageProvider>
   );
 }
@@ -89,6 +93,7 @@ function MenuShell({ menu }: { menu: Menu }) {
       <BackgroundField />
       <FloatingLogo />
       <LanguageToggle />
+      {brand.features.ordering && <CartWidget />}
       <ProgressRail categories={menu} active={active} onJump={jumpTo} rtl={rtl} />
 
       <div

@@ -4,7 +4,17 @@ import type {
   Menu,
   MenuCategory,
   MenuItem,
+  Order,
+  OrderLine,
+  OrderStatus,
 } from "@/lib/types";
+
+export interface NewOrder {
+  table: string | null;
+  note: string | null;
+  lines: OrderLine[];
+  totalBaisa: number;
+}
 
 /**
  * The storage contract the app depends on. Two implementations satisfy it:
@@ -24,6 +34,11 @@ export interface MenuStore {
   updateItem(id: string, input: Partial<ItemInput>): Promise<MenuItem>;
   deleteItem(id: string): Promise<void>;
   reorderItems(categoryId: string, orderedIds: string[]): Promise<void>;
+
+  // Orders
+  createOrder(order: NewOrder): Promise<Order>;
+  listOrders(): Promise<Order[]>;
+  updateOrderStatus(id: string, status: OrderStatus): Promise<Order>;
 
   /** Human-readable label for the active backend (shown in admin). */
   readonly backend: "postgres" | "json";

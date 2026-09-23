@@ -4,9 +4,11 @@ import type {
   Menu,
   MenuCategory,
   MenuItem,
+  Order,
+  OrderStatus,
 } from "@/lib/types";
 import { prisma } from "@/lib/prisma";
-import type { MenuStore } from "./types";
+import type { MenuStore, NewOrder } from "./types";
 
 type PrismaItem = {
   id: string;
@@ -143,4 +145,77 @@ export class PrismaMenuStore implements MenuStore {
       ),
     );
   }
+
+  async createOrder(order: NewOrder): Promise<Order> {
+    const o = await prisma.order.create({
+      data: {
+        table: order.table,
+        note: order.note,
+        totalBaisa: order.totalBaisa,
+        lines: {
+          create: order.lines.map((l) => ({
+            itemId: l.itemId,
+            name: l.name,
+            nameAr: l.nameAr,
+            priceBaisa: l.priceBaisa,
+            quantity: l.quantity,
+          })),
+        },
+      },
+      include: { lines: true },
+    });
+    return toOrder(o);
+  }
+
+  async listOrders(): Promise<Order[]> {
+    const orders = await prisma.order.findMany({
+      orderBy: { createdAt: "desc" },
+      include: { lines: true },
+      take: 200,
+    });
+    return orders.map(toOrder);
+  }
+
+  async updateOrderStatus(id: string, status: OrderStatus): Promise<Order> {
+    const o = await prisma.order.update({
+      where: { id },
+      data: { status },
+      include: { lines: true },
+    });
+    return toOrder(o);
+  }
+}
+
+type PrismaOrder = {
+  id: string;
+  table: string | null;
+  status: string;
+  note: string | null;
+  totalBaisa: number;
+  createdAt: Date;
+  lines: {
+    itemId: string | null;
+    name: string;
+    nameAr: string | null;
+    priceBaisa: number;
+    quantity: number;
+  }[];
+};
+
+function toOrder(o: PrismaOrder): Order {
+  return {
+    id: o.id,
+    table: o.table,
+    status: o.status as OrderStatus,
+    note: o.note,
+    totalBaisa: o.totalBaisa,
+    createdAt: o.createdAt.toISOString(),
+    lines: o.lines.map((l) => ({
+      itemId: l.itemId,
+      name: l.name,
+      nameAr: l.nameAr,
+      priceBaisa: l.priceBaisa,
+      quantity: l.quantity,
+    })),
+  };
 }

@@ -64,6 +64,16 @@ Deploy. The build auto-creates the tables and seeds the sample menu.
   descriptions, prices, image paths), set `IMPORT_MENU=1` in Netlify env, redeploy
   once (this **wipes** the sample and loads the real menu), then **remove** the flag.
 
+## 6b. Optional: table ordering + POS
+- **Enable ordering:** set `features.ordering: true` in `src/brand.config.ts`.
+  Diners get an "Add" control on each dish, a cart, and can place orders; staff
+  see them live at `/admin/orders`. Works with no POS.
+- **Table QR codes:** print them from `/admin/tables` (each opens the menu with
+  that table pre-selected, so orders arrive tagged with the table).
+- **POS connector:** implement a `PosAdapter` in `src/lib/pos` (e.g. Foodics),
+  register it, and set `POS_PROVIDER` + credentials in env. The webhook endpoint
+  is `/api/pos/webhook`. Bilingual + RTL apply to ordering too.
+
 ## 7. Domain + handover
 - Add the custom domain in Netlify (free SSL).
 - Give the client: the menu URL, `/admin` URL, their admin password, and a short how-to.

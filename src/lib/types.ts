@@ -43,3 +43,32 @@ export interface ItemInput {
   priceBaisa?: number;
   imageUrl?: string | null;
 }
+
+// --- Orders ---
+
+export type OrderStatus = "new" | "preparing" | "served" | "cancelled";
+
+export interface OrderLine {
+  itemId: string | null;
+  name: string;
+  nameAr: string | null;
+  priceBaisa: number;
+  quantity: number;
+}
+
+export interface Order {
+  id: string;
+  table: string | null;
+  status: OrderStatus;
+  note: string | null;
+  totalBaisa: number;
+  lines: OrderLine[];
+  createdAt: string;
+}
+
+/** What a customer submits: item ids + quantities. Totals are computed server-side. */
+export interface OrderInput {
+  table?: string | null;
+  note?: string | null;
+  lines: { itemId: string; quantity: number }[];
+}

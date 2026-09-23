@@ -7,8 +7,10 @@ import type {
   Menu,
   MenuCategory,
   MenuItem,
+  Order,
+  OrderStatus,
 } from "@/lib/types";
-import type { MenuStore } from "./types";
+import type { MenuStore, NewOrder } from "./types";
 import { cloneSampleMenu } from "./sample-menu";
 
 /**
@@ -18,6 +20,20 @@ import { cloneSampleMenu } from "./sample-menu";
  * read-only, so DATABASE_URL selects the Postgres store instead.
  */
 const DATA_FILE = path.join(process.cwd(), "data", "menu.local.json");
+const ORDERS_FILE = path.join(process.cwd(), "data", "orders.local.json");
+
+async function readOrders(): Promise<Order[]> {
+  try {
+    return JSON.parse(await fs.readFile(ORDERS_FILE, "utf8")) as Order[];
+  } catch {
+    return [];
+  }
+}
+
+async function writeOrders(orders: Order[]): Promise<void> {
+  await fs.mkdir(path.dirname(ORDERS_FILE), { recursive: true });
+  await fs.writeFile(ORDERS_FILE, JSON.stringify(orders, null, 2), "utf8");
+}
 
 async function readMenu(): Promise<Menu> {
   try {
@@ -154,5 +170,35 @@ export class JsonMenuStore implements MenuStore {
       if (index.has(item.id)) item.position = index.get(item.id)!;
     }
     await writeMenu(menu);
+  }
+
+  async createOrder(order: NewOrder): Promise<Order> {
+    const orders = await readOrders();
+    const created: Order = {
+      id: randomUUID(),
+      table: order.table,
+      status: "new",
+      note: order.note,
+      totalBaisa: order.totalBaisa,
+      lines: order.lines,
+      createdAt: new Date().toISOString(),
+    };
+    orders.unshift(created);
+    await writeOrders(orders);
+    return created;
+  }
+
+  async listOrders(): Promise<Order[]> {
+    const orders = await readOrders();
+    return orders.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  }
+
+  async updateOrderStatus(id: string, status: OrderStatus): Promise<Order> {
+    const orders = await readOrders();
+    const order = orders.find((o) => o.id === id);
+    if (!order) throw new Error("Order not found");
+    order.status = status;
+    await writeOrders(orders);
+    return order;
   }
 }

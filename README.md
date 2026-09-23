@@ -19,6 +19,12 @@ see **[ONBOARDING.md](./ONBOARDING.md)**.
 Also deployable to Vercel (Postgres + Blob). The image uploader auto-detects the
 provider from env vars (S3/R2 → Vercel Blob → local files).
 
+**Bilingual (EN/AR + RTL):** every dish carries English + Arabic; a toggle flips
+the whole menu to right-to-left with Arabic fonts. **Optional ordering:** enable
+`features.ordering` for table-QR ordering — cart → order → live `/admin/orders`
+board, a `/admin/tables` QR generator, and a POS adapter interface (`src/lib/pos`)
+ready for connectors like Foodics.
+
 ---
 
 ## Quick start (local)

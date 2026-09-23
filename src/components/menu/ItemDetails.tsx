@@ -2,7 +2,9 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { MenuItem } from "@/lib/types";
+import { brand } from "@/brand.config";
 import PriceTag from "./PriceTag";
+import AddControl from "./AddControl";
 import { useLang } from "./LanguageContext";
 
 /** Name, description, and price for the active dish. Crossfades on swipe. */
@@ -32,6 +34,11 @@ export default function ItemDetails({ item }: { item: MenuItem }) {
           <div className="mt-5">
             <PriceTag priceBaisa={item.priceBaisa} />
           </div>
+          {brand.features.ordering && (
+            <div className="mt-4">
+              <AddControl item={item} />
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>

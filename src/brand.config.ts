@@ -28,6 +28,10 @@ export type Brand = {
     /** A full wa.me URL, or just a phone number (we build the link). */
     whatsapp: string;
   };
+  features: {
+    /** Enable table QR ordering (cart → order → admin orders board). */
+    ordering: boolean;
+  };
 };
 
 export const brand: Brand = {
@@ -40,5 +44,8 @@ export const brand: Brand = {
     map: "",
     instagram: "",
     whatsapp: "",
+  },
+  features: {
+    ordering: false,
   },
 };

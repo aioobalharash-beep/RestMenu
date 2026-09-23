@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Menu, MenuCategory, MenuItem } from "@/lib/types";
 import { api } from "./api";
+import { brand } from "@/brand.config";
 import CategoryCard from "./CategoryCard";
 import ItemEditor from "./ItemEditor";
 
@@ -168,6 +169,22 @@ export default function AdminDashboard({
             </span>
           </div>
           <div className="flex shrink-0 items-center gap-0.5 sm:gap-1.5">
+            {brand.features.ordering && (
+              <>
+                <a
+                  href="/admin/orders"
+                  className="focus-ring whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-porcelain-deep hover:text-ink sm:px-3"
+                >
+                  Orders
+                </a>
+                <a
+                  href="/admin/tables"
+                  className="focus-ring hidden whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-porcelain-deep hover:text-ink sm:inline-block sm:px-3"
+                >
+                  Tables
+                </a>
+              </>
+            )}
             <a
               href="/"
               target="_blank"

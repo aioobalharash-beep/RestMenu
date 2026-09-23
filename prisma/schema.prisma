@@ -44,3 +44,33 @@ model Item {
 
   @@index([categoryId, position])
 }
+
+// ─── Ordering (optional feature) ───
+
+model Order {
+  id         String      @id @default(cuid())
+  // Table label from the QR link (e.g. "12"); null for pickup/unknown.
+  table      String?
+  status     String      @default("new") // new | preparing | served | cancelled
+  note       String?
+  totalBaisa Int         @default(0)
+  lines      OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  orderId    String
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  // Snapshot of the dish at order time (survives later menu edits).
+  itemId     String?
+  name       String
+  nameAr     String?
+  priceBaisa Int     @default(0)
+  quantity   Int     @default(1)
+
+  @@index([orderId])
+}
