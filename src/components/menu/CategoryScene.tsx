@@ -6,6 +6,7 @@ import CategoryTitle from "./CategoryTitle";
 import ItemSwiper from "./ItemSwiper";
 import ItemDetails from "./ItemDetails";
 import ScrollCue from "./ScrollCue";
+import { useLang } from "./LanguageContext";
 
 /** One full-height "scene": a category, its swipeable dishes, and details. */
 const CategoryScene = forwardRef<
@@ -18,6 +19,7 @@ const CategoryScene = forwardRef<
     onJumpNext: () => void;
   }
 >(function CategoryScene({ category, next, active, sceneIndex, onJumpNext }, ref) {
+  const { pick } = useLang();
   const [index, setIndex] = useState(0);
   const items = category.items;
   const item = items[index] ?? items[0];
@@ -30,7 +32,7 @@ const CategoryScene = forwardRef<
       aria-label={category.name}
     >
       <div className="flex w-full flex-1 flex-col items-center justify-center gap-4 sm:gap-7">
-        <CategoryTitle name={category.name} active={active} />
+        <CategoryTitle name={pick(category.name, category.nameAr)} active={active} />
 
         {item ? (
           <>

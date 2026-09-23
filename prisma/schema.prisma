@@ -15,6 +15,8 @@ datasource db {
 model Category {
   id        String   @id @default(cuid())
   name      String
+  // Arabic translation (optional; falls back to English).
+  nameAr    String?
   // Optional short kicker shown above the title (e.g. "To begin").
   kicker    String?
   position  Int      @default(0)
@@ -26,17 +28,19 @@ model Category {
 }
 
 model Item {
-  id          String   @id @default(cuid())
-  name        String
-  description String   @default("")
+  id            String   @id @default(cuid())
+  name          String
+  nameAr        String?
+  description   String   @default("")
+  descriptionAr String?
   // Price stored in baisa (1 OMR = 1000 baisa) to avoid float rounding.
-  priceBaisa  Int      @default(0)
-  imageUrl    String?
-  position    Int      @default(0)
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  priceBaisa    Int      @default(0)
+  imageUrl      String?
+  position      Int      @default(0)
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([categoryId, position])
 }

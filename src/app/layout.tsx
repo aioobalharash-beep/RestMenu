@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter, Amiri, Tajawal } from "next/font/google";
 import { brand } from "@/brand.config";
 import "./globals.css";
 
@@ -15,6 +15,21 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Arabic pairing: Amiri (elegant serif, pairs with Fraunces) + Tajawal (clean sans).
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-amiri",
+  display: "swap",
+});
+
+const tajawal = Tajawal({
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-tajawal",
   display: "swap",
 });
 
@@ -46,7 +61,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable}`}
+      className={`${fraunces.variable} ${inter.variable} ${amiri.variable} ${tajawal.variable}`}
       style={brandVars}
     >
       <body>{children}</body>

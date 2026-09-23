@@ -12,6 +12,8 @@ export async function POST(req: Request) {
     typeof body?.kicker === "string" && body.kicker.trim()
       ? body.kicker.trim()
       : null;
-  const category = await getStore().createCategory({ name, kicker });
+  const nameAr =
+    typeof body?.nameAr === "string" && body.nameAr.trim() ? body.nameAr.trim() : null;
+  const category = await getStore().createCategory({ name, nameAr, kicker });
   return NextResponse.json({ category });
 }

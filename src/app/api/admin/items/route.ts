@@ -12,7 +12,9 @@ export async function POST(req: Request) {
   try {
     const item = await getStore().createItem(categoryId, {
       name,
+      nameAr: typeof body?.nameAr === "string" && body.nameAr.trim() ? body.nameAr.trim() : null,
       description: typeof body?.description === "string" ? body.description : "",
+      descriptionAr: typeof body?.descriptionAr === "string" ? body.descriptionAr : null,
       priceBaisa: Number.isFinite(body?.priceBaisa) ? Math.max(0, Math.round(body.priceBaisa)) : 0,
       imageUrl: typeof body?.imageUrl === "string" && body.imageUrl ? body.imageUrl : null,
     });

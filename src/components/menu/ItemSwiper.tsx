@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
 import type { MenuItem } from "@/lib/types";
 import DishImage, { DishDisc } from "./DishImage";
+import { useLang } from "./LanguageContext";
 
 const SWIPE_CONFIDENCE = 8000;
 const power = (offset: number, velocity: number) => Math.abs(offset) * velocity;
@@ -27,7 +28,9 @@ export default function ItemSwiper({
   active: boolean;
 }) {
   const reduce = useReducedMotion();
+  const { rtl } = useLang();
   const count = items.length;
+  const dirFactor = rtl ? -1 : 1;
 
   const go = (dir: number) => {
     if (count <= 1) return;
@@ -37,20 +40,21 @@ export default function ItemSwiper({
   useEffect(() => {
     if (!active || count <= 1) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") go(1);
-      if (e.key === "ArrowLeft") go(-1);
+      // In RTL the left/right arrows map to the mirrored direction.
+      if (e.key === "ArrowRight") go(rtl ? -1 : 1);
+      if (e.key === "ArrowLeft") go(rtl ? 1 : -1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, index, count]);
+  }, [active, index, count, rtl]);
 
   return (
     <div className="relative w-full select-none">
       {count > 1 && (
         <>
-          <SwipeArrow side="left" onClick={() => go(-1)} label="Previous dish" />
-          <SwipeArrow side="right" onClick={() => go(1)} label="Next dish" />
+          <SwipeArrow side="left" onClick={() => go(rtl ? 1 : -1)} label={rtl ? "Next dish" : "Previous dish"} />
+          <SwipeArrow side="right" onClick={() => go(rtl ? -1 : 1)} label={rtl ? "Previous dish" : "Next dish"} />
         </>
       )}
 
@@ -67,7 +71,7 @@ export default function ItemSwiper({
           const near = Math.abs(d) <= 1;
 
           const style: React.CSSProperties = {
-            transform: `translate(-50%, -50%) translateX(${d * 64}%) scale(${isCenter ? 1 : 0.64})`,
+            transform: `translate(-50%, -50%) translateX(${d * 64 * dirFactor}%) scale(${isCenter ? 1 : 0.64})`,
             filter: isCenter ? "none" : "blur(3px)",
             opacity: near ? (isCenter ? 1 : 0.5) : 0,
             zIndex: isCenter ? 20 : 10 - Math.abs(d),
@@ -93,8 +97,10 @@ export default function ItemSwiper({
                   dragConstraints={{ left: 0, right: 0 }}
                   onDragEnd={(_, info) => {
                     const swipe = power(info.offset.x, info.velocity.x);
-                    if (swipe < -SWIPE_CONFIDENCE || info.offset.x < -70) go(1);
-                    else if (swipe > SWIPE_CONFIDENCE || info.offset.x > 70) go(-1);
+                    // Dragging toward a side brings that side's dish to centre;
+                    // the mapping mirrors in RTL.
+                    if (swipe < -SWIPE_CONFIDENCE || info.offset.x < -70) go(rtl ? -1 : 1);
+                    else if (swipe > SWIPE_CONFIDENCE || info.offset.x > 70) go(rtl ? 1 : -1);
                   }}
                   whileTap={count > 1 ? { cursor: "grabbing" } : undefined}
                 >

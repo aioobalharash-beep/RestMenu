@@ -13,13 +13,16 @@ async function req<T>(url: string, init?: RequestInit): Promise<T> {
 export const api = {
   getMenu: () => req<{ menu: Menu }>("/api/admin/menu").then((d) => d.menu),
 
-  createCategory: (input: { name: string; kicker?: string | null }) =>
+  createCategory: (input: { name: string; nameAr?: string | null; kicker?: string | null }) =>
     req<{ category: MenuCategory }>("/api/admin/categories", {
       method: "POST",
       body: JSON.stringify(input),
     }).then((d) => d.category),
 
-  updateCategory: (id: string, input: { name?: string; kicker?: string | null }) =>
+  updateCategory: (
+    id: string,
+    input: { name?: string; nameAr?: string | null; kicker?: string | null },
+  ) =>
     req<{ category: MenuCategory }>(`/api/admin/categories/${id}`, {
       method: "PATCH",
       body: JSON.stringify(input),
@@ -37,7 +40,9 @@ export const api = {
   createItem: (input: {
     categoryId: string;
     name: string;
+    nameAr?: string | null;
     description?: string;
+    descriptionAr?: string | null;
     priceBaisa?: number;
     imageUrl?: string | null;
   }) =>
@@ -50,7 +55,9 @@ export const api = {
     id: string,
     input: {
       name?: string;
+      nameAr?: string | null;
       description?: string;
+      descriptionAr?: string | null;
       priceBaisa?: number;
       imageUrl?: string | null;
     },

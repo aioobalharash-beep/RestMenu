@@ -11,7 +11,9 @@ import type { MenuStore } from "./types";
 type PrismaItem = {
   id: string;
   name: string;
+  nameAr: string | null;
   description: string;
+  descriptionAr: string | null;
   priceBaisa: number;
   imageUrl: string | null;
   position: number;
@@ -21,7 +23,9 @@ function toItem(i: PrismaItem): MenuItem {
   return {
     id: i.id,
     name: i.name,
+    nameAr: i.nameAr,
     description: i.description,
+    descriptionAr: i.descriptionAr,
     priceBaisa: i.priceBaisa,
     imageUrl: i.imageUrl,
     position: i.position,
@@ -40,6 +44,7 @@ export class PrismaMenuStore implements MenuStore {
     return categories.map((c) => ({
       id: c.id,
       name: c.name,
+      nameAr: c.nameAr,
       kicker: c.kicker,
       position: c.position,
       items: c.items.map(toItem),
@@ -51,12 +56,13 @@ export class PrismaMenuStore implements MenuStore {
     const c = await prisma.category.create({
       data: {
         name: input.name,
+        nameAr: input.nameAr ?? null,
         kicker: input.kicker ?? null,
         position: count,
       },
       include: { items: true },
     });
-    return { id: c.id, name: c.name, kicker: c.kicker, position: c.position, items: [] };
+    return { id: c.id, name: c.name, nameAr: c.nameAr, kicker: c.kicker, position: c.position, items: [] };
   }
 
   async updateCategory(
@@ -67,6 +73,7 @@ export class PrismaMenuStore implements MenuStore {
       where: { id },
       data: {
         ...(input.name !== undefined ? { name: input.name } : {}),
+        ...(input.nameAr !== undefined ? { nameAr: input.nameAr ?? null } : {}),
         ...(input.kicker !== undefined ? { kicker: input.kicker ?? null } : {}),
       },
       include: { items: { orderBy: { position: "asc" } } },
@@ -74,6 +81,7 @@ export class PrismaMenuStore implements MenuStore {
     return {
       id: c.id,
       name: c.name,
+      nameAr: c.nameAr,
       kicker: c.kicker,
       position: c.position,
       items: c.items.map(toItem),
@@ -98,7 +106,9 @@ export class PrismaMenuStore implements MenuStore {
       data: {
         categoryId,
         name: input.name,
+        nameAr: input.nameAr ?? null,
         description: input.description ?? "",
+        descriptionAr: input.descriptionAr ?? null,
         priceBaisa: input.priceBaisa ?? 0,
         imageUrl: input.imageUrl ?? null,
         position: count,
@@ -112,7 +122,9 @@ export class PrismaMenuStore implements MenuStore {
       where: { id },
       data: {
         ...(input.name !== undefined ? { name: input.name } : {}),
+        ...(input.nameAr !== undefined ? { nameAr: input.nameAr ?? null } : {}),
         ...(input.description !== undefined ? { description: input.description } : {}),
+        ...(input.descriptionAr !== undefined ? { descriptionAr: input.descriptionAr ?? null } : {}),
         ...(input.priceBaisa !== undefined ? { priceBaisa: input.priceBaisa } : {}),
         ...(input.imageUrl !== undefined ? { imageUrl: input.imageUrl ?? null } : {}),
       },

@@ -24,12 +24,15 @@ async function main() {
     await prisma.category.create({
       data: {
         name: category.name,
+        nameAr: category.nameAr,
         kicker: category.kicker,
         position: category.position,
         items: {
           create: category.items.map((item) => ({
             name: item.name,
+            nameAr: item.nameAr,
             description: item.description,
+            descriptionAr: item.descriptionAr,
             priceBaisa: item.priceBaisa,
             imageUrl: item.imageUrl,
             position: item.position,

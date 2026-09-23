@@ -6,14 +6,26 @@ import BackgroundField from "./BackgroundField";
 import FloatingLogo from "./FloatingLogo";
 import CategoryScene from "./CategoryScene";
 import ProgressRail from "./ProgressRail";
+import LanguageToggle from "./LanguageToggle";
+import { LanguageProvider, useLang } from "./LanguageContext";
+
+/** Public entry: provides language context around the scrolling menu. */
+export default function MenuExperience({ menu }: { menu: Menu }) {
+  return (
+    <LanguageProvider>
+      <MenuShell menu={menu} />
+    </LanguageProvider>
+  );
+}
 
 /**
  * The scrolling menu. A single scroll container holds one full-height scene per
- * category with vertical snap; an IntersectionObserver tracks the active scene
- * for the progress rail, and scroll position feeds a shared --sy variable that
- * drives the background parallax.
+ * category; an IntersectionObserver tracks the active scene for the progress
+ * rail, and scroll position feeds a shared --sy variable for background parallax.
+ * Direction (LTR/RTL) follows the selected language.
  */
-export default function MenuExperience({ menu }: { menu: Menu }) {
+function MenuShell({ menu }: { menu: Menu }) {
+  const { rtl } = useLang();
   const scrollRef = useRef<HTMLDivElement>(null);
   const sceneRefs = useRef<(HTMLElement | null)[]>([]);
   const ratios = useRef<number[]>(menu.map(() => 0));
@@ -70,10 +82,14 @@ export default function MenuExperience({ menu }: { menu: Menu }) {
   }, []);
 
   return (
-    <div className="relative h-[100dvh] overflow-hidden text-ink paper-grain">
+    <div
+      dir={rtl ? "rtl" : "ltr"}
+      className={`relative h-[100dvh] overflow-hidden text-ink paper-grain ${rtl ? "lang-ar" : ""}`}
+    >
       <BackgroundField />
       <FloatingLogo />
-      <ProgressRail categories={menu} active={active} onJump={jumpTo} />
+      <LanguageToggle />
+      <ProgressRail categories={menu} active={active} onJump={jumpTo} rtl={rtl} />
 
       <div
         ref={scrollRef}

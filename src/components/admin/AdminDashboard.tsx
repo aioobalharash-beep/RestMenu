@@ -22,6 +22,7 @@ export default function AdminDashboard({
   const [editor, setEditor] = useState<EditorState>(null);
   const [toast, setToast] = useState<Toast>(null);
   const [newName, setNewName] = useState("");
+  const [newNameAr, setNewNameAr] = useState("");
   const [addingCategory, setAddingCategory] = useState(false);
 
   const notify = useCallback((msg: string, tone: "ok" | "err" = "ok") => {
@@ -47,9 +48,10 @@ export default function AdminDashboard({
     if (!name) return;
     setAddingCategory(true);
     try {
-      const category = await api.createCategory({ name, kicker: null });
+      const category = await api.createCategory({ name, nameAr: newNameAr.trim() || null, kicker: null });
       setCats((c) => [...c, category]);
       setNewName("");
+      setNewNameAr("");
       notify("Category added.");
     } catch (e) {
       notify(e instanceof Error ? e.message : "Could not add category.", "err");
@@ -58,10 +60,15 @@ export default function AdminDashboard({
     }
   }
 
-  async function renameCategory(id: string, name: string, kicker: string | null) {
-    setCats((c) => c.map((x) => (x.id === id ? { ...x, name, kicker } : x)));
+  async function renameCategory(
+    id: string,
+    name: string,
+    nameAr: string | null,
+    kicker: string | null,
+  ) {
+    setCats((c) => c.map((x) => (x.id === id ? { ...x, name, nameAr, kicker } : x)));
     try {
-      await api.updateCategory(id, { name, kicker });
+      await api.updateCategory(id, { name, nameAr, kicker });
       notify("Category updated.");
     } catch (e) {
       notify(e instanceof Error ? e.message : "Update failed.", "err");
@@ -193,7 +200,7 @@ export default function AdminDashboard({
               category={category}
               isFirst={i === 0}
               isLast={i === cats.length - 1}
-              onRename={(name, kicker) => renameCategory(category.id, name, kicker)}
+              onRename={(name, nameAr, kicker) => renameCategory(category.id, name, nameAr, kicker)}
               onDelete={() => deleteCategory(category.id)}
               onMove={(dir) => moveCategory(category.id, dir)}
               onAddItem={() => setEditor({ categoryId: category.id, item: null })}
@@ -207,11 +214,19 @@ export default function AdminDashboard({
         {/* Add category */}
         <div className="mt-5 rounded-2xl border border-dashed border-hairline bg-cream/50 p-5">
           <h3 className="font-display text-lg text-ink">Add a course</h3>
-          <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]">
+          <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
             <input
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               placeholder="Course name — e.g. Desserts"
+              className="input"
+              onKeyDown={(e) => e.key === "Enter" && addCategory()}
+            />
+            <input
+              value={newNameAr}
+              onChange={(e) => setNewNameAr(e.target.value)}
+              placeholder="اسم القسم (عربي)"
+              dir="rtl"
               className="input"
               onKeyDown={(e) => e.key === "Enter" && addCategory()}
             />

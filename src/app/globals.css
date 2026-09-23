@@ -94,6 +94,13 @@
 .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 
+/* Arabic: swap the display/body fonts for the whole subtree. */
+.lang-ar {
+  --font-display: var(--font-amiri), ui-serif, Georgia, serif;
+  --font-sans: var(--font-tajawal), ui-sans-serif, system-ui, sans-serif;
+}
+.lang-ar :is(h1, h2, h3, h4) { line-height: 1.2; }
+
 /* Admin form input */
 .input {
   width: 100%;

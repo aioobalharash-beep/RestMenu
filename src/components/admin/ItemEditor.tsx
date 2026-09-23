@@ -20,7 +20,9 @@ export default function ItemEditor({
   notify: (msg: string, tone?: "ok" | "err") => void;
 }) {
   const [name, setName] = useState(item?.name ?? "");
+  const [nameAr, setNameAr] = useState(item?.nameAr ?? "");
   const [description, setDescription] = useState(item?.description ?? "");
+  const [descriptionAr, setDescriptionAr] = useState(item?.descriptionAr ?? "");
   const [price, setPrice] = useState(item ? baisaToOmrInput(item.priceBaisa) : "");
   const [imageUrl, setImageUrl] = useState<string | null>(item?.imageUrl ?? null);
   const [uploading, setUploading] = useState(false);
@@ -57,7 +59,9 @@ export default function ItemEditor({
     setSaving(true);
     const payload = {
       name: name.trim(),
+      nameAr: nameAr.trim() || null,
       description: description.trim(),
+      descriptionAr: descriptionAr.trim() || null,
       priceBaisa: parseOmrToBaisa(price),
       imageUrl,
     };
@@ -77,7 +81,7 @@ export default function ItemEditor({
       className="fixed inset-0 z-50 grid place-items-center bg-ink/40 p-4 backdrop-blur-sm"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="max-h-[90dvh] w-full max-w-lg overflow-y-auto rounded-2xl border border-hairline bg-cream p-6 shadow-float">
+      <div className="max-h-[90dvh] w-full max-w-xl overflow-y-auto rounded-2xl border border-hairline bg-cream p-6 shadow-float">
         <div className="flex items-start justify-between">
           <h2 className="font-display text-2xl text-ink">
             {isNew ? "New dish" : "Edit dish"}
@@ -135,27 +139,50 @@ export default function ItemEditor({
           </div>
         </div>
 
-        {/* Name */}
-        <Field label="Name" className="mt-5">
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Seared Scallops"
-            className="input"
-            autoFocus
-          />
-        </Field>
+        {/* Name (EN / AR) */}
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <Field label="Name (English)">
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Seared Scallops"
+              className="input"
+              autoFocus
+            />
+          </Field>
+          <Field label="الاسم (عربي)">
+            <input
+              value={nameAr}
+              onChange={(e) => setNameAr(e.target.value)}
+              placeholder="مثال: إسكالوب محمّر"
+              dir="rtl"
+              className="input"
+            />
+          </Field>
+        </div>
 
-        {/* Description */}
-        <Field label="Description" className="mt-4">
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={3}
-            placeholder="A short, appetising line…"
-            className="input resize-none"
-          />
-        </Field>
+        {/* Description (EN / AR) */}
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <Field label="Description (English)">
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+              placeholder="A short, appetising line…"
+              className="input resize-none"
+            />
+          </Field>
+          <Field label="الوصف (عربي)">
+            <textarea
+              value={descriptionAr}
+              onChange={(e) => setDescriptionAr(e.target.value)}
+              rows={3}
+              placeholder="وصف قصير وشهي…"
+              dir="rtl"
+              className="input resize-none"
+            />
+          </Field>
+        </div>
 
         {/* Price */}
         <Field label="Price (OMR)" className="mt-4">

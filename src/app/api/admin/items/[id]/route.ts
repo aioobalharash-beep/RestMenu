@@ -15,7 +15,13 @@ export async function PATCH(req: Request, { params }: Ctx) {
     if (!name) return NextResponse.json({ error: "Name is required." }, { status: 400 });
     patch.name = name;
   }
+  if ("nameAr" in body) {
+    patch.nameAr = typeof body.nameAr === "string" && body.nameAr.trim() ? body.nameAr.trim() : null;
+  }
   if (typeof body?.description === "string") patch.description = body.description;
+  if ("descriptionAr" in body) {
+    patch.descriptionAr = typeof body.descriptionAr === "string" ? body.descriptionAr : null;
+  }
   if (Number.isFinite(body?.priceBaisa)) patch.priceBaisa = Math.max(0, Math.round(body.priceBaisa));
   if ("imageUrl" in body) {
     patch.imageUrl = typeof body.imageUrl === "string" && body.imageUrl ? body.imageUrl : null;

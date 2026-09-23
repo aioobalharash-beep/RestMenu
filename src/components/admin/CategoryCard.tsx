@@ -21,7 +21,7 @@ export default function CategoryCard({
   category: MenuCategory;
   isFirst: boolean;
   isLast: boolean;
-  onRename: (name: string, kicker: string | null) => void;
+  onRename: (name: string, nameAr: string | null, kicker: string | null) => void;
   onDelete: () => void;
   onMove: (dir: -1 | 1) => void;
   onAddItem: () => void;
@@ -31,10 +31,11 @@ export default function CategoryCard({
 }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(category.name);
+  const [nameAr, setNameAr] = useState(category.nameAr ?? "");
 
   function save() {
     if (!name.trim()) return;
-    onRename(name.trim(), null);
+    onRename(name.trim(), nameAr.trim() || null, null);
     setEditing(false);
   }
 
@@ -52,9 +53,17 @@ export default function CategoryCard({
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Category name"
+              placeholder="Category name (English)"
               className="input font-display"
               autoFocus
+              onKeyDown={(e) => e.key === "Enter" && save()}
+            />
+            <input
+              value={nameAr}
+              onChange={(e) => setNameAr(e.target.value)}
+              placeholder="اسم القسم (عربي)"
+              dir="rtl"
+              className="input mt-2 font-display"
               onKeyDown={(e) => e.key === "Enter" && save()}
             />
             <div className="mt-2 flex gap-2">
@@ -64,6 +73,7 @@ export default function CategoryCard({
               <button
                 onClick={() => {
                   setName(category.name);
+                  setNameAr(category.nameAr ?? "");
                   setEditing(false);
                 }}
                 className="focus-ring rounded-lg px-3 py-1.5 text-xs font-medium text-ink-soft hover:text-ink"
@@ -74,7 +84,14 @@ export default function CategoryCard({
           </div>
         ) : (
           <div className="flex-1">
-            <h2 className="font-display text-2xl leading-tight text-ink">{category.name}</h2>
+            <h2 className="font-display text-2xl leading-tight text-ink">
+              {category.name}
+              {category.nameAr && (
+                <span className="ms-2 text-lg text-ink-faint" dir="rtl">
+                  {category.nameAr}
+                </span>
+              )}
+            </h2>
             <p className="mt-0.5 text-xs text-ink-faint">
               {category.items.length} {category.items.length === 1 ? "dish" : "dishes"}
             </p>

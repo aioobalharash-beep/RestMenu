@@ -55,6 +55,7 @@ export class JsonMenuStore implements MenuStore {
     const category: MenuCategory = {
       id: randomUUID(),
       name: input.name,
+      nameAr: input.nameAr ?? null,
       kicker: input.kicker ?? null,
       position: menu.length,
       items: [],
@@ -72,6 +73,7 @@ export class JsonMenuStore implements MenuStore {
     const category = menu.find((c) => c.id === id);
     if (!category) throw new Error("Category not found");
     if (input.name !== undefined) category.name = input.name;
+    if (input.nameAr !== undefined) category.nameAr = input.nameAr ?? null;
     if (input.kicker !== undefined) category.kicker = input.kicker ?? null;
     await writeMenu(menu);
     return category;
@@ -100,7 +102,9 @@ export class JsonMenuStore implements MenuStore {
     const item: MenuItem = {
       id: randomUUID(),
       name: input.name,
+      nameAr: input.nameAr ?? null,
       description: input.description ?? "",
+      descriptionAr: input.descriptionAr ?? null,
       priceBaisa: input.priceBaisa ?? 0,
       imageUrl: input.imageUrl ?? null,
       position: category.items.length,
@@ -116,7 +120,9 @@ export class JsonMenuStore implements MenuStore {
       const item = category.items.find((i) => i.id === id);
       if (item) {
         if (input.name !== undefined) item.name = input.name;
+        if (input.nameAr !== undefined) item.nameAr = input.nameAr ?? null;
         if (input.description !== undefined) item.description = input.description;
+        if (input.descriptionAr !== undefined) item.descriptionAr = input.descriptionAr ?? null;
         if (input.priceBaisa !== undefined) item.priceBaisa = input.priceBaisa;
         if (input.imageUrl !== undefined) item.imageUrl = input.imageUrl ?? null;
         await writeMenu(menu);

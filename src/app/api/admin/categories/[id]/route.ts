@@ -7,11 +7,15 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function PATCH(req: Request, { params }: Ctx) {
   const { id } = await params;
   const body = await req.json().catch(() => ({}));
-  const patch: { name?: string; kicker?: string | null } = {};
+  const patch: { name?: string; nameAr?: string | null; kicker?: string | null } = {};
   if (typeof body?.name === "string") {
     const name = body.name.trim();
     if (!name) return NextResponse.json({ error: "Name is required." }, { status: 400 });
     patch.name = name;
+  }
+  if ("nameAr" in body) {
+    patch.nameAr =
+      typeof body.nameAr === "string" && body.nameAr.trim() ? body.nameAr.trim() : null;
   }
   if ("kicker" in body) {
     patch.kicker =
