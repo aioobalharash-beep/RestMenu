@@ -8,6 +8,12 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # ADMIN_PASSWORD is an app login value that lives only in the server function
+  # env — it never ends up in public/build output. Netlify's secret scanner can
+  # false-positive on it (a short password matching bytes inside compiled
+  # binaries like the Prisma/sharp .so files), so exclude just this key.
+  # All real cloud credentials (DATABASE_URL, S3 keys, SESSION_SECRET) stay scanned.
+  SECRETS_SCAN_OMIT_KEYS = "ADMIN_PASSWORD"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
