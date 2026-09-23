@@ -20,6 +20,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: err.message }, { status: err.status });
     }
     console.error("[upload] failed:", err);
-    return NextResponse.json({ error: "Upload failed." }, { status: 500 });
+    // Surface the real reason to the (authenticated) admin to aid setup debugging.
+    const detail =
+      err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+    return NextResponse.json(
+      { error: `Upload failed — ${detail}` },
+      { status: 500 },
+    );
   }
 }
