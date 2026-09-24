@@ -157,7 +157,6 @@ function MenuShell({ menu }: { menu: Menu }) {
             key={category.id}
             ref={(el) => { sceneRefs.current[i] = el; }}
             sceneIndex={i}
-            total={menu.length}
             category={category}
             categories={menu}
             next={i < menu.length - 1 ? menu[i + 1] : null}

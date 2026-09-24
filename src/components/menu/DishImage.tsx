@@ -15,7 +15,15 @@ import {
  * still reading as a floating print for opaque photos). Used, dimmed and small,
  * for the coverflow neighbours.
  */
-export function DishFloat({ src, alt }: { src: string | null; alt: string }) {
+export function DishFloat({
+  src,
+  alt,
+  shadow = true,
+}: {
+  src: string | null;
+  alt: string;
+  shadow?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [src]);
   const showImage = src && !failed;
@@ -37,7 +45,7 @@ export function DishFloat({ src, alt }: { src: string | null; alt: string }) {
       src={src}
       alt={alt}
       onError={() => setFailed(true)}
-      className="h-full w-full object-contain dish-shadow"
+      className={`h-full w-full object-contain ${shadow ? "dish-shadow" : ""}`}
       draggable={false}
     />
   );

@@ -8,9 +8,6 @@ import CourseIndex from "./CourseIndex";
 import ScrollCue from "./ScrollCue";
 import { useLang } from "./LanguageContext";
 
-const NUM_AR = ["٠١", "٠٢", "٠٣", "٠٤", "٠٥", "٠٦", "٠٧", "٠٨", "٠٩", "١٠"];
-const pad = (n: number) => String(n).padStart(2, "0");
-
 /** One full-height editorial spread: a course, its copy, and its floating dishes. */
 const CategoryScene = forwardRef<
   HTMLElement,
@@ -20,12 +17,11 @@ const CategoryScene = forwardRef<
     next: MenuCategory | null;
     active: boolean;
     sceneIndex: number;
-    total: number;
     onJumpNext: () => void;
     onJumpTo: (i: number) => void;
   }
 >(function CategoryScene(
-  { category, categories, next, active, sceneIndex, total, onJumpNext, onJumpTo },
+  { category, categories, next, active, sceneIndex, onJumpNext, onJumpTo },
   ref,
 ) {
   const { pick, rtl } = useLang();
@@ -33,8 +29,6 @@ const CategoryScene = forwardRef<
   const items = category.items;
   const item = items[index] ?? items[0];
 
-  const num = rtl ? NUM_AR[sceneIndex] ?? pad(sceneIndex + 1) : pad(sceneIndex + 1);
-  const totalNum = rtl ? NUM_AR[total - 1] ?? pad(total) : pad(total);
   const catName = pick(category.name, category.nameAr);
 
   // Heuristic: show steam for hot categories (drinks/soups), EN or AR.
@@ -49,44 +43,30 @@ const CategoryScene = forwardRef<
       className="relative flex min-h-[100svh] flex-col overflow-hidden px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(4.5rem,calc(env(safe-area-inset-top)+3.75rem))] sm:px-12"
       aria-label={catName}
     >
-      {/* Giant ghost course numeral */}
+      {/* Giant ghost course name — a faint masthead behind the spread */}
       <span
         aria-hidden
-        className="pointer-events-none absolute top-[-3%] z-0 select-none font-display leading-none text-ink opacity-[0.05]"
-        style={{ insetInlineStart: "1.5%", fontSize: "34vh" }}
+        className="pointer-events-none absolute top-[2%] z-0 select-none whitespace-nowrap font-display leading-none text-ink opacity-[0.05]"
+        style={{ insetInlineStart: "3%", fontSize: "clamp(3.5rem,13vw,12rem)" }}
       >
-        {num}
+        {catName}
       </span>
 
-      {/* Running header: course + paging (brand lives in the fixed logo) */}
-      <div className="relative z-10 flex items-center justify-center gap-3 text-center">
+      {/* Running header: the course name */}
+      <div className="relative z-10 text-center">
         <span
           className={`text-ink-soft ${
-            rtl ? "text-[0.9rem]" : "font-mono text-[0.7rem] uppercase tracking-[0.3em]"
+            rtl ? "text-[0.95rem]" : "font-mono text-[0.7rem] uppercase tracking-[0.3em]"
           }`}
         >
           {catName}
         </span>
-        <span className="text-saffron">·</span>
-        <span className="font-mono text-[0.72rem] tabular-nums text-ink-faint">
-          {num} / {totalNum}
-        </span>
       </div>
 
       {/* Stage */}
-      <div className="relative z-10 grid flex-1 items-center gap-x-8 gap-y-6 md:grid-cols-[1.02fr_1.12fr] lg:gap-x-14">
+      <div className="relative z-10 grid flex-1 items-center gap-x-8 gap-y-4 md:grid-cols-[0.92fr_1.3fr] lg:gap-x-12">
         {/* Copy */}
         <div className="order-2 md:order-1">
-          <div className="mb-5 h-[2px] w-14 bg-saffron" />
-          <div
-            className={`mb-3.5 ${
-              rtl ? "text-[0.95rem]" : "font-mono text-[0.72rem] uppercase tracking-[0.12em]"
-            }`}
-            style={{ color: "var(--color-indigo)" }}
-          >
-            {rtl ? `الطبق ${num} — ${catName}` : `Course ${num} — ${catName}`}
-          </div>
-
           {item ? (
             <>
               <ItemDetails item={item} />

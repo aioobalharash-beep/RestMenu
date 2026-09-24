@@ -65,7 +65,7 @@ export default function ItemSwiper({
       )}
 
       {/* Coverflow stage — overflow visible so neighbours peek at the edges */}
-      <div className="relative mx-auto flex aspect-square w-[min(78vw,34dvh,26rem)] items-center justify-center [overflow:visible]">
+      <div className="relative mx-auto flex aspect-square w-[min(88vw,54dvh,34rem)] items-center justify-center [overflow:visible]">
         {items.map((item, i) => {
           // Shortest signed distance (wraps around for a full stage).
           let d = i - index;
@@ -77,8 +77,8 @@ export default function ItemSwiper({
           const near = Math.abs(d) <= 1;
 
           const style: React.CSSProperties = {
-            transform: `translate(-50%, -50%) translateX(${d * 68 * dirFactor}%) scale(${isCenter ? 1 : 0.58})`,
-            opacity: near ? (isCenter ? 1 : 0.32) : 0,
+            transform: `translate(-50%, -50%) translateX(${d * 62 * dirFactor}%) scale(${isCenter ? 1 : 0.5})`,
+            opacity: near ? (isCenter ? 1 : 0.16) : 0,
             zIndex: isCenter ? 20 : 10 - Math.abs(d),
             pointerEvents: near ? "auto" : "none",
             transition: reduce
@@ -117,9 +117,9 @@ export default function ItemSwiper({
                   onClick={() => onIndexChange(i)}
                   className="grid h-full w-full place-items-center"
                 >
-                  {/* Neighbours: dimmed + slightly desaturated so the centre leads */}
-                  <div className="aspect-square w-[78%]" style={{ filter: "grayscale(0.2)" }}>
-                    <DishFloat src={item.imageUrl} alt="" />
+                  {/* Neighbours: faint hints so the centre dish leads */}
+                  <div className="aspect-square w-[80%]">
+                    <DishFloat src={item.imageUrl} alt="" shadow={false} />
                   </div>
                 </button>
               )}
