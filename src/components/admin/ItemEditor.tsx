@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { MenuItem } from "@/lib/types";
 import { baisaToOmrInput, parseOmrToBaisa } from "@/lib/money";
+import { resizeImage } from "@/lib/resize-image";
 import { api } from "./api";
 
 /** Modal to create or edit a dish: name, image, description, price. */
@@ -42,7 +43,8 @@ export default function ItemEditor({
     if (!file) return;
     setUploading(true);
     try {
-      const url = await api.upload(file);
+      const optimized = await resizeImage(file);
+      const url = await api.upload(optimized);
       setImageUrl(url);
     } catch (err) {
       notify(err instanceof Error ? err.message : "Upload failed.", "err");
