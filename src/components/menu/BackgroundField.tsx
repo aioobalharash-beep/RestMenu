@@ -22,7 +22,7 @@ export default function BackgroundField() {
         className="absolute right-[-8vw] top-[24vh] h-[52vh] w-[52vh] rounded-full opacity-40 blur-[100px]"
         style={{
           background:
-            "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-indigo) 26%, transparent), transparent 68%)",
+            "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-saffron) 22%, transparent), transparent 68%)",
           transform: "translateY(calc(var(--sy, 0) * 0.04px))",
         }}
       />

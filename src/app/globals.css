@@ -1,36 +1,36 @@
 @import "tailwindcss";
 
 /*
-  RestMenu — "Muscat Gallery" design system
-  An editorial food-magazine palette: limestone paper, warm ink, a Muscat
-  indigo and an Omani clay. Type leads with an editorial serif + a monospace
-  "gallery label" voice, and Arabic is a first-class display face, not a
-  translation. Dishes float free on the paper; nothing sits on a disc.
+  RestMenu — "Charcoal & Ember" design system
+  An editorial food-magazine palette: warm charcoal ink on soft neutral paper,
+  with a single ember (terracotta-red) accent. Type leads with an editorial
+  serif + a monospace "gallery label" voice, and Arabic is a first-class
+  display face, not a translation. Dishes float free on the paper; no disc.
 */
 
 @theme {
-  /* Limestone paper neutrals */
-  --color-porcelain: #f2ece1;       /* paper */
-  --color-porcelain-deep: #e7dfd0;  /* paper, one step down */
-  --color-cream: #f7f2ea;           /* lightest paper */
-  --color-shell: #fbf8f2;           /* raised card surface */
+  /* Warm neutral paper */
+  --color-porcelain: #efece7;       /* paper */
+  --color-porcelain-deep: #e5e1d9;  /* paper, one step down */
+  --color-cream: #f7f4ee;           /* lightest paper */
+  --color-shell: #fbf8f3;           /* raised card surface */
 
-  /* Ink — warm near-black, never pure #000 */
-  --color-ink: #1a1916;
+  /* Ink — warm charcoal, never pure #000 */
+  --color-ink: #1b1917;
   --color-ink-soft: #57514a;
-  --color-ink-faint: #928b80;
+  --color-ink-faint: #938b80;
 
-  /* Accents. --color-saffron is the white-label primary (clay by default);
-     --color-indigo is the fixed cool counterpoint used for eyebrows/labels. */
-  --color-saffron: #a24a34;         /* clay (primary accent) */
-  --color-saffron-deep: #843a28;
-  --color-clay: #a24a34;
-  --color-indigo: #27356a;
-  --color-sage: #5f6b57;
+  /* Accents. --color-saffron is the white-label primary (ember by default);
+     --color-indigo is the warm-grey secondary used for quiet labels/lines. */
+  --color-saffron: #b5482f;         /* ember (primary accent) */
+  --color-saffron-deep: #8f3720;
+  --color-clay: #b5482f;
+  --color-indigo: #5a5550;
+  --color-sage: #6f7b54;
 
   /* Lines & fills */
-  --color-hairline: rgba(26, 25, 22, 0.14);
-  --color-hairline-soft: rgba(26, 25, 22, 0.08);
+  --color-hairline: rgba(27, 25, 23, 0.14);
+  --color-hairline-soft: rgba(27, 25, 23, 0.07);
 
   --font-display: var(--font-serif), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -66,7 +66,7 @@
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-indigo) 26%, transparent);
+    background: color-mix(in srgb, var(--color-saffron) 26%, transparent);
     color: var(--color-ink);
   }
 
@@ -104,20 +104,20 @@
 
 /* Evening (dark) theme — scoped to whatever element carries data-theme="dark". */
 [data-theme="dark"] {
-  --color-porcelain: #111119;
-  --color-porcelain-deep: #14141d;
-  --color-cream: #191922;
-  --color-shell: #1c1c26;
-  --color-ink: #efe7d8;
-  --color-ink-soft: #ada493;
-  --color-ink-faint: #7d7568;
-  --color-saffron: #cf6d4f;
-  --color-saffron-deep: #b85a3e;
-  --color-clay: #cf6d4f;
-  --color-indigo: #8ea1e0;
-  --color-sage: #8a9a86;
-  --color-hairline: rgba(255, 255, 255, 0.13);
-  --color-hairline-soft: rgba(255, 255, 255, 0.07);
+  --color-porcelain: #131211;
+  --color-porcelain-deep: #181615;
+  --color-cream: #1a1817;
+  --color-shell: #201d1b;
+  --color-ink: #ece7df;
+  --color-ink-soft: #aaa093;
+  --color-ink-faint: #7c746a;
+  --color-saffron: #d55f3f;
+  --color-saffron-deep: #c04e30;
+  --color-clay: #d55f3f;
+  --color-indigo: #8a827a;
+  --color-sage: #9aa07e;
+  --color-hairline: rgba(255, 255, 255, 0.11);
+  --color-hairline-soft: rgba(255, 255, 255, 0.05);
   color-scheme: dark;
 }
 [data-theme="dark"] .paper-grain::before {
@@ -159,8 +159,8 @@
 }
 .input::placeholder { color: var(--color-ink-faint); }
 .input:focus-visible {
-  border-color: var(--color-indigo);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-indigo) 22%, transparent);
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-saffron) 22%, transparent);
 }
 
 /* Grain / paper texture overlay (very subtle) */
@@ -178,7 +178,7 @@
 
 /* Focus ring — accessible + on-brand */
 .focus-ring:focus-visible {
-  outline: 2px solid var(--color-indigo);
+  outline: 2px solid var(--color-saffron);
   outline-offset: 2px;
   border-radius: 6px;
 }

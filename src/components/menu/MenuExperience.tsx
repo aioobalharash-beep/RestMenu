@@ -14,13 +14,13 @@ import { CartProvider } from "./CartContext";
 import { brand } from "@/brand.config";
 
 // Each course gets its own ambient hue, cross-faded as you scroll — kept faint
-// so the spotlight behind each dish stays the star.
+// so the spotlight behind each dish stays the star. Warm tones only.
 const HUES = [
-  "var(--color-indigo)",
-  "var(--color-clay)",
-  "var(--color-sage)",
   "var(--color-saffron)",
-  "var(--color-indigo)",
+  "#a9772f",
+  "var(--color-sage)",
+  "#9c5a44",
+  "#7a6a5c",
 ];
 
 /** Public entry: provides language (and, when enabled, cart) context. */
