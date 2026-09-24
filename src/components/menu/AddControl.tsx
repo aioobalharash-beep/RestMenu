@@ -10,10 +10,19 @@ export default function AddControl({ item }: { item: MenuItem }) {
   const { rtl } = useLang();
   const qty = qtyOf(item.id);
 
+  function addWithHaptic() {
+    try {
+      navigator.vibrate?.(12);
+    } catch {
+      /* ignore */
+    }
+    add(item);
+  }
+
   if (qty === 0) {
     return (
       <button
-        onClick={() => add(item)}
+        onClick={addWithHaptic}
         className="focus-ring inline-flex items-center gap-1.5 rounded-full border border-saffron-deep/40 bg-shell/70 px-5 py-2 text-sm font-medium text-saffron-deep shadow-soft backdrop-blur-md transition-all hover:-translate-y-0.5 hover:bg-shell"
       >
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>

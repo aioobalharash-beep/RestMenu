@@ -21,11 +21,13 @@ export default function ItemSwiper({
   index,
   onIndexChange,
   active,
+  hot = false,
 }: {
   items: MenuItem[];
   index: number;
   onIndexChange: (next: number) => void;
   active: boolean;
+  hot?: boolean;
 }) {
   const reduce = useReducedMotion();
   const { rtl } = useLang();
@@ -34,6 +36,11 @@ export default function ItemSwiper({
 
   const go = (dir: number) => {
     if (count <= 1) return;
+    try {
+      navigator.vibrate?.(8);
+    } catch {
+      /* ignore */
+    }
     onIndexChange((index + dir + count) % count);
   };
 
@@ -104,7 +111,7 @@ export default function ItemSwiper({
                   }}
                   whileTap={count > 1 ? { cursor: "grabbing" } : undefined}
                 >
-                  <DishImage src={item.imageUrl} alt={item.name} active={active} />
+                  <DishImage src={item.imageUrl} alt={item.name} active={active} hot={hot} />
                 </motion.div>
               ) : (
                 <button

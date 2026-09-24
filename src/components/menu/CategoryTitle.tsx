@@ -15,8 +15,13 @@ export default function CategoryTitle({
     <motion.div
       className="text-center"
       initial={false}
-      animate={{ opacity: active ? 1 : 0.55, y: active || reduce ? 0 : 6 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      animate={{
+        opacity: active ? 1 : 0.5,
+        y: active || reduce ? 0 : 6,
+        filter: active || reduce ? "blur(0px)" : "blur(3px)",
+        letterSpacing: active || reduce ? "0em" : "0.04em",
+      }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
     >
       <h2 className="font-display text-[clamp(2.4rem,8vw,4.25rem)] font-light leading-[0.95] tracking-tight text-ink">
         {name}

@@ -1,16 +1,27 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Menu } from "@/lib/types";
 import BackgroundField from "./BackgroundField";
 import FloatingLogo from "./FloatingLogo";
 import CategoryScene from "./CategoryScene";
 import ProgressRail from "./ProgressRail";
-import LanguageToggle from "./LanguageToggle";
+import TopControls from "./TopControls";
+import IntroOverlay from "./IntroOverlay";
 import CartWidget from "./CartWidget";
 import { LanguageProvider, useLang } from "./LanguageContext";
 import { CartProvider } from "./CartContext";
 import { brand } from "@/brand.config";
+
+// Each course gets its own ambient hue, cross-faded as you scroll.
+const HUES = [
+  "var(--color-saffron)",
+  "var(--color-clay)",
+  "var(--color-sage)",
+  "#b5678a",
+  "#5f8aa8",
+];
 
 /** Public entry: provides language (and, when enabled, cart) context. */
 export default function MenuExperience({ menu }: { menu: Menu }) {
@@ -22,24 +33,44 @@ export default function MenuExperience({ menu }: { menu: Menu }) {
   );
 }
 
-/**
- * The scrolling menu. A single scroll container holds one full-height scene per
- * category; an IntersectionObserver tracks the active scene for the progress
- * rail, and scroll position feeds a shared --sy variable for background parallax.
- * Direction (LTR/RTL) follows the selected language.
- */
 function MenuShell({ menu }: { menu: Menu }) {
   const { rtl } = useLang();
   const scrollRef = useRef<HTMLDivElement>(null);
   const sceneRefs = useRef<(HTMLElement | null)[]>([]);
   const ratios = useRef<number[]>(menu.map(() => 0));
   const [active, setActive] = useState(0);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  // Restore / detect theme.
+  useEffect(() => {
+    try {
+      const s = localStorage.getItem("rm_theme");
+      if (s === "light" || s === "dark") {
+        setTheme(s);
+        return;
+      }
+    } catch {
+      /* ignore */
+    }
+    if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((p) => {
+      const n = p === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("rm_theme", n);
+      } catch {
+        /* ignore */
+      }
+      return n;
+    });
+  }, []);
 
   const jumpTo = useCallback((i: number) => {
     sceneRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
-  // Track which scene is most visible.
   useEffect(() => {
     const root = scrollRef.current;
     if (!root) return;
@@ -65,7 +96,6 @@ function MenuShell({ menu }: { menu: Menu }) {
     return () => observer.disconnect();
   }, [menu.length]);
 
-  // Feed scroll position into --sy for parallax (rAF-throttled).
   useEffect(() => {
     const root = scrollRef.current;
     if (!root) return;
@@ -85,14 +115,37 @@ function MenuShell({ menu }: { menu: Menu }) {
     };
   }, []);
 
+  const hue = HUES[active % HUES.length];
+
   return (
     <div
+      data-theme={theme}
       dir={rtl ? "rtl" : "ltr"}
       className={`relative h-[100dvh] overflow-hidden text-ink paper-grain ${rtl ? "lang-ar" : ""}`}
+      style={{ backgroundColor: "var(--color-porcelain)" }}
     >
       <BackgroundField />
+
+      {/* Per-course ambiance tint, cross-faded on scroll */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <AnimatePresence>
+          <motion.div
+            key={hue}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: theme === "dark" ? 0.5 : 0.32 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.1, ease: "easeInOut" }}
+            style={{
+              background: `radial-gradient(120% 80% at 50% 12%, color-mix(in srgb, ${hue} 55%, transparent), transparent 60%)`,
+            }}
+          />
+        </AnimatePresence>
+      </div>
+
+      <IntroOverlay />
       <FloatingLogo />
-      <LanguageToggle />
+      <TopControls theme={theme} onToggleTheme={toggleTheme} />
       {brand.features.ordering && <CartWidget />}
       <ProgressRail categories={menu} active={active} onJump={jumpTo} rtl={rtl} />
 

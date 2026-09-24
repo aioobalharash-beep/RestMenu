@@ -24,6 +24,11 @@ const CategoryScene = forwardRef<
   const items = category.items;
   const item = items[index] ?? items[0];
 
+  // Heuristic: show steam for hot categories (drinks/soups), EN or AR.
+  const hot = /hot|drink|coffee|tea|latte|soup|قهوة|شاي|ساخن|حساء|لاتيه|مشروب/i.test(
+    `${category.name} ${category.nameAr ?? ""}`,
+  );
+
   return (
     <section
       ref={ref}
@@ -41,6 +46,7 @@ const CategoryScene = forwardRef<
               index={Math.min(index, items.length - 1)}
               onIndexChange={setIndex}
               active={active}
+              hot={hot}
             />
             <ItemDetails item={item} />
           </>

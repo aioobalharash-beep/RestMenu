@@ -94,6 +94,31 @@
 .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 
+/* Evening (dark) theme — scoped to whatever element carries data-theme="dark". */
+[data-theme="dark"] {
+  --color-porcelain: #17130f;
+  --color-porcelain-deep: #201a15;
+  --color-cream: #201a16;
+  --color-shell: #2b241d;
+  --color-ink: #f4ecdf;
+  --color-ink-soft: #ccc0af;
+  --color-ink-faint: #8f8474;
+  --color-hairline: rgba(255, 255, 255, 0.12);
+  --color-hairline-soft: rgba(255, 255, 255, 0.07);
+  color-scheme: dark;
+}
+[data-theme="dark"] .paper-grain::before {
+  mix-blend-mode: screen;
+  opacity: 0.04;
+}
+
+/* Rising steam for hot items */
+@keyframes steamRise {
+  0% { transform: translateY(0) scaleX(0.9); opacity: 0; }
+  25% { opacity: 0.55; }
+  100% { transform: translateY(-64px) scaleX(1.7); opacity: 0; }
+}
+
 /* Arabic: swap the display/body fonts for the whole subtree. */
 .lang-ar {
   --font-display: var(--font-amiri), ui-serif, Georgia, serif;

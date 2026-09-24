@@ -1,12 +1,33 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { animate, useReducedMotion } from "framer-motion";
 import { splitOmr } from "@/lib/money";
 import { useLang } from "./LanguageContext";
 
-/** The large, confident price. Whole part leads; fraction and unit are quiet. */
+/** The large, confident price. Counts up when the dish changes. */
 export default function PriceTag({ priceBaisa }: { priceBaisa: number }) {
-  const { whole, fraction } = splitOmr(priceBaisa);
   const { unit } = useLang();
+  const reduce = useReducedMotion();
+  const [display, setDisplay] = useState(priceBaisa);
+  const prev = useRef(priceBaisa);
+
+  useEffect(() => {
+    if (reduce) {
+      setDisplay(priceBaisa);
+      prev.current = priceBaisa;
+      return;
+    }
+    const controls = animate(prev.current, priceBaisa, {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => setDisplay(v),
+    });
+    prev.current = priceBaisa;
+    return () => controls.stop();
+  }, [priceBaisa, reduce]);
+
+  const { whole, fraction } = splitOmr(Math.round(display));
   return (
     <div className="inline-flex items-baseline gap-1.5" dir="ltr">
       <span className="font-display text-5xl leading-none text-ink sm:text-6xl">
