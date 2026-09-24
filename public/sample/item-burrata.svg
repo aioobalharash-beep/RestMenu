@@ -1,15 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
   <defs>
-    <radialGradient id="pl" cx="50%" cy="42%" r="62%">
-      <stop offset="0%" stop-color="#fbf5ea"/>
-      <stop offset="100%" stop-color="#efe3cf"/>
+    <radialGradient id="plate" cx="50%" cy="44%" r="58%">
+      <stop offset="0%" stop-color="#f8f2e7"/>
+      <stop offset="78%" stop-color="#f0e7d6"/>
+      <stop offset="100%" stop-color="#e6dcc8"/>
     </radialGradient>
-    <radialGradient id="rim" cx="50%" cy="50%" r="50%">
-      <stop offset="86%" stop-color="rgba(0,0,0,0)"/>
-      <stop offset="93%" stop-color="rgba(120,90,50,0.10)"/>
-      <stop offset="100%" stop-color="rgba(120,90,50,0)"/>
+    <radialGradient id="well" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#fbf6ec"/>
+      <stop offset="100%" stop-color="#f1e8d8"/>
     </radialGradient>
   </defs>
-  <rect width="600" height="600" fill="url(#pl)"/>
-  <circle cx="300" cy="300" r="300" fill="url(#rim)"/>
-  <circle cx="300" cy="300" r="240" fill="none" stroke="rgba(120,90,50,0.10)" stroke-width="2"/><circle cx="317.0" cy="324.1" r="57.9" fill="#f4f1ea" opacity="0.92"/><circle cx="276.9" cy="296.8" r="68.6" fill="#f7ede0" opacity="0.92"/><circle cx="267.4" cy="226.7" r="95.3" fill="#e9b7a0" opacity="0.92"/><circle cx="365.0" cy="266.0" r="78.4" fill="#f4f1ea" opacity="0.92"/><circle cx="305.4" cy="259.6" r="47.3" fill="#f7ede0" opacity="0.92"/><circle cx="294.0" cy="294.4" r="7.6" fill="rgba(90,120,70,0.7)"/><circle cx="313.0" cy="379.9" r="6.9" fill="rgba(90,120,70,0.7)"/><circle cx="290.5" cy="352.0" r="6.9" fill="rgba(90,120,70,0.7)"/><circle cx="280.8" cy="210.8" r="4.2" fill="rgba(90,120,70,0.7)"/><circle cx="215.5" cy="355.2" r="6.1" fill="rgba(90,120,70,0.7)"/><circle cx="311.7" cy="326.3" r="5.8" fill="rgba(90,120,70,0.7)"/><circle cx="265.6" cy="281.3" r="4.5" fill="rgba(90,120,70,0.7)"/></svg>
+  <!-- transparent background: only the plate is drawn, so it floats -->
+  <circle cx="300" cy="300" r="252" fill="url(#plate)"/>
+  <circle cx="300" cy="300" r="252" fill="none" stroke="rgba(26,25,22,0.10)" stroke-width="2"/>
+  <circle cx="300" cy="298" r="196" fill="url(#well)"/>
+  <circle cx="300" cy="298" r="196" fill="none" stroke="rgba(26,25,22,0.06)" stroke-width="2"/>
+  <g><g opacity="0.97"><circle cx="296.2" cy="305.4" r="40.3" fill="#f3ede2"/><circle cx="285.7" cy="302.7" r="25.8" fill="#f3ede2"/><circle cx="286.4" cy="310.0" r="40.9" fill="#f3ede2"/></g><g opacity="0.96"><circle cx="319.9" cy="275.4" r="28.7" fill="#7d8f52"/><circle cx="301.2" cy="312.5" r="44.1" fill="#7d8f52"/><circle cx="308.8" cy="297.9" r="41.6" fill="#7d8f52"/></g><g opacity="0.88"><circle cx="308.0" cy="306.6" r="57.4" fill="#f3ede2"/><circle cx="281.2" cy="279.8" r="42.9" fill="#f3ede2"/><circle cx="298.3" cy="274.3" r="36.7" fill="#f3ede2"/><circle cx="302.6" cy="276.7" r="50.4" fill="#f3ede2"/></g><g opacity="0.94"><circle cx="352.4" cy="372.3" r="43.8" fill="#f3ede2"/><circle cx="330.1" cy="360.0" r="65.1" fill="#f3ede2"/><circle cx="332.3" cy="397.9" r="51.1" fill="#f3ede2"/><circle cx="335.8" cy="357.4" r="52.0" fill="#f3ede2"/><circle cx="349.4" cy="393.3" r="43.6" fill="#f3ede2"/></g><g opacity="0.88"><circle cx="302.1" cy="235.9" r="56.1" fill="#7d8f52"/><circle cx="281.8" cy="261.7" r="37.6" fill="#7d8f52"/><circle cx="314.2" cy="222.5" r="58.7" fill="#7d8f52"/><circle cx="295.9" cy="235.4" r="37.1" fill="#7d8f52"/></g><g opacity="0.96"><circle cx="317.4" cy="281.8" r="38.8" fill="#c0472f"/><circle cx="310.1" cy="308.0" r="42.4" fill="#c0472f"/><circle cx="309.1" cy="298.1" r="26.6" fill="#c0472f"/><circle cx="305.6" cy="299.3" r="26.1" fill="#c0472f"/><circle cx="326.4" cy="294.2" r="24.5" fill="#c0472f"/></g><g opacity="0.89"><circle cx="268.1" cy="358.6" r="44.7" fill="#c0472f"/><circle cx="234.4" cy="324.5" r="55.9" fill="#c0472f"/><circle cx="269.8" cy="358.8" r="56.0" fill="#c0472f"/><circle cx="220.3" cy="344.2" r="56.7" fill="#c0472f"/></g></g>
+</svg>

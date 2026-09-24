@@ -1,15 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
   <defs>
-    <radialGradient id="pl" cx="50%" cy="42%" r="62%">
-      <stop offset="0%" stop-color="#f7f2ea"/>
-      <stop offset="100%" stop-color="#e6ddcb"/>
+    <radialGradient id="plate" cx="50%" cy="44%" r="58%">
+      <stop offset="0%" stop-color="#f8f2e7"/>
+      <stop offset="78%" stop-color="#f0e7d6"/>
+      <stop offset="100%" stop-color="#e6dcc8"/>
     </radialGradient>
-    <radialGradient id="rim" cx="50%" cy="50%" r="50%">
-      <stop offset="86%" stop-color="rgba(0,0,0,0)"/>
-      <stop offset="93%" stop-color="rgba(120,90,50,0.10)"/>
-      <stop offset="100%" stop-color="rgba(120,90,50,0)"/>
+    <radialGradient id="well" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#fbf6ec"/>
+      <stop offset="100%" stop-color="#f1e8d8"/>
     </radialGradient>
   </defs>
-  <rect width="600" height="600" fill="url(#pl)"/>
-  <circle cx="300" cy="300" r="300" fill="url(#rim)"/>
-  <circle cx="300" cy="300" r="240" fill="none" stroke="rgba(120,90,50,0.10)" stroke-width="2"/><circle cx="291.9" cy="292.4" r="51.4" fill="#eae0cf" opacity="0.92"/><circle cx="253.6" cy="348.6" r="66.6" fill="#d9c9a8" opacity="0.92"/><circle cx="316.9" cy="324.9" r="59.4" fill="#c8873b" opacity="0.92"/><circle cx="275.1" cy="245.7" r="77.4" fill="#eae0cf" opacity="0.92"/><circle cx="323.8" cy="279.7" r="68.7" fill="#d9c9a8" opacity="0.92"/><circle cx="325.3" cy="291.6" r="6.3" fill="rgba(90,120,70,0.7)"/><circle cx="339.3" cy="335.5" r="5.1" fill="rgba(90,120,70,0.7)"/><circle cx="286.9" cy="304.5" r="3.0" fill="rgba(90,120,70,0.7)"/><circle cx="288.1" cy="262.0" r="3.1" fill="rgba(90,120,70,0.7)"/><circle cx="370.5" cy="289.2" r="4.8" fill="rgba(90,120,70,0.7)"/><circle cx="308.1" cy="299.4" r="5.9" fill="rgba(90,120,70,0.7)"/><circle cx="185.4" cy="285.9" r="7.7" fill="rgba(90,120,70,0.7)"/></svg>
+  <!-- transparent background: only the plate is drawn, so it floats -->
+  <circle cx="300" cy="300" r="252" fill="url(#plate)"/>
+  <circle cx="300" cy="300" r="252" fill="none" stroke="rgba(26,25,22,0.10)" stroke-width="2"/>
+  <circle cx="300" cy="298" r="196" fill="url(#well)"/>
+  <circle cx="300" cy="298" r="196" fill="none" stroke="rgba(26,25,22,0.06)" stroke-width="2"/>
+  <g><g opacity="0.94"><circle cx="398.5" cy="335.9" r="59.2" fill="#e9e0d0"/><circle cx="408.9" cy="284.4" r="46.7" fill="#e9e0d0"/><circle cx="425.9" cy="322.9" r="55.5" fill="#e9e0d0"/><circle cx="392.6" cy="284.8" r="67.1" fill="#e9e0d0"/></g><g opacity="0.97"><circle cx="261.1" cy="295.4" r="38.9" fill="#9db08a"/><circle cx="260.3" cy="346.7" r="58.0" fill="#9db08a"/><circle cx="249.7" cy="327.5" r="57.2" fill="#9db08a"/><circle cx="270.1" cy="328.2" r="47.7" fill="#9db08a"/></g><g opacity="0.91"><circle cx="351.0" cy="203.5" r="28.2" fill="#d9b25a"/><circle cx="364.4" cy="186.9" r="52.2" fill="#d9b25a"/><circle cx="376.4" cy="175.6" r="26.4" fill="#d9b25a"/><circle cx="338.9" cy="196.9" r="51.9" fill="#d9b25a"/><circle cx="343.8" cy="178.8" r="46.7" fill="#d9b25a"/></g><g opacity="0.95"><circle cx="331.0" cy="287.5" r="31.7" fill="#e9e0d0"/><circle cx="328.1" cy="294.0" r="23.7" fill="#e9e0d0"/><circle cx="311.5" cy="296.5" r="30.4" fill="#e9e0d0"/></g><g opacity="0.93"><circle cx="293.0" cy="271.3" r="37.6" fill="#e9e0d0"/><circle cx="294.7" cy="277.3" r="37.2" fill="#e9e0d0"/><circle cx="295.5" cy="264.4" r="20.7" fill="#e9e0d0"/><circle cx="304.2" cy="270.2" r="31.2" fill="#e9e0d0"/></g><g opacity="0.96"><circle cx="242.0" cy="242.2" r="48.0" fill="#d9b25a"/><circle cx="257.4" cy="236.4" r="37.5" fill="#d9b25a"/><circle cx="266.9" cy="225.1" r="69.0" fill="#d9b25a"/><circle cx="270.2" cy="232.9" r="62.3" fill="#d9b25a"/><circle cx="276.6" cy="239.1" r="39.9" fill="#d9b25a"/></g><g opacity="0.89"><circle cx="309.3" cy="292.3" r="48.1" fill="#9db08a"/><circle cx="299.8" cy="275.6" r="42.4" fill="#9db08a"/><circle cx="283.4" cy="277.5" r="45.9" fill="#9db08a"/><circle cx="318.7" cy="276.1" r="44.1" fill="#9db08a"/><circle cx="286.0" cy="299.7" r="42.5" fill="#9db08a"/></g></g>
+</svg>

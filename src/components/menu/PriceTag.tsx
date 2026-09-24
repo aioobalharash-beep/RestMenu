@@ -5,7 +5,7 @@ import { animate, useReducedMotion } from "framer-motion";
 import { splitOmr } from "@/lib/money";
 import { useLang } from "./LanguageContext";
 
-/** The large, confident price. Counts up when the dish changes. */
+/** The price as a gallery label: monospace, understated, clay unit. Counts up. */
 export default function PriceTag({ priceBaisa }: { priceBaisa: number }) {
   const { unit } = useLang();
   const reduce = useReducedMotion();
@@ -29,13 +29,16 @@ export default function PriceTag({ priceBaisa }: { priceBaisa: number }) {
 
   const { whole, fraction } = splitOmr(Math.round(display));
   return (
-    <div className="inline-flex items-baseline gap-1.5" dir="ltr">
-      <span className="font-display text-5xl leading-none text-ink sm:text-6xl">
+    <div
+      className="inline-flex items-baseline gap-2.5 border-b border-hairline pb-1.5"
+      dir="ltr"
+    >
+      <span className="font-mono text-4xl font-bold leading-none tracking-tight text-ink sm:text-5xl">
         {whole}
         <span className="text-ink-faint">.</span>
-        <span className="text-3xl text-ink-soft sm:text-4xl">{fraction}</span>
+        <span className="text-2xl text-ink-soft sm:text-3xl">{fraction}</span>
       </span>
-      <span className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-saffron-deep">
+      <span className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-saffron">
         {unit}
       </span>
     </div>

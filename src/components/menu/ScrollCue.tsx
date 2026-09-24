@@ -2,11 +2,12 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
+import { useLang } from "./LanguageContext";
 
 /**
  * A quiet scroll affordance at the bottom of a scene. Scrolling is continuous,
- * so the real next category flows up into view on its own — no placeholder name.
- * The last scene ends with the contact footer.
+ * so the next course flows up into view on its own. The last scene ends with
+ * the contact footer instead.
  */
 export default function ScrollCue({
   isLast,
@@ -16,22 +17,31 @@ export default function ScrollCue({
   onJump: () => void;
 }) {
   const reduce = useReducedMotion();
+  const { rtl } = useLang();
 
   if (isLast) {
     return <SocialLinks />;
   }
 
   return (
-    <motion.button
+    <button
       onClick={onJump}
-      aria-label="Next course"
-      className="focus-ring grid h-10 w-10 place-items-center rounded-full text-ink-faint transition-colors hover:text-ink-soft"
-      animate={reduce ? undefined : { y: [0, 6, 0] }}
-      transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+      aria-label={rtl ? "الطبق التالي" : "Next course"}
+      className="focus-ring group inline-flex items-center gap-2.5 text-ink-faint transition-colors hover:text-ink-soft"
     >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </motion.button>
+      <span
+        className={`${rtl ? "text-[0.85rem]" : "font-mono text-[0.68rem] uppercase tracking-[0.2em]"}`}
+      >
+        {rtl ? "الطبق التالي" : "Next course"}
+      </span>
+      <motion.span
+        aria-hidden
+        className="text-saffron"
+        animate={reduce ? undefined : { y: [0, 4, 0] }}
+        transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+      >
+        ↓
+      </motion.span>
+    </button>
   );
 }

@@ -7,6 +7,8 @@
  *                        (or .png) and set the path here, or leave null to
  *                        use the built-in fork-&-knife mark + wordmark.
  *  3. accent / accentDeep → the brand colour (buttons, highlights, price unit).
+ *                        Leave both "" to use the built-in Omani clay accent.
+ *                        Set a hex to override it site-wide (light + dark).
  *  4. contact          → location / Instagram / WhatsApp for the footer.
  *                        (Env vars NEXT_PUBLIC_* override these if set.)
  *
@@ -38,8 +40,8 @@ export const brand: Brand = {
   name: "Maison",
   tagline: "the menu",
   logo: null,
-  accent: "#c8873b",
-  accentDeep: "#a86a24",
+  accent: "",
+  accentDeep: "",
   contact: {
     map: "",
     instagram: "",

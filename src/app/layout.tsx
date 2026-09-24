@@ -1,28 +1,44 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, Amiri, Tajawal } from "next/font/google";
+import {
+  Instrument_Serif,
+  Schibsted_Grotesk,
+  Space_Mono,
+  Aref_Ruqaa,
+  Tajawal,
+} from "next/font/google";
 import { brand } from "@/brand.config";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Editorial serif for dish names + the giant course numerals.
+const serif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400"],
   style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  variable: "--font-serif",
   display: "swap",
 });
 
-const inter = Inter({
+// Body / UI grotesk.
+const grotesk = Schibsted_Grotesk({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-inter",
+  weight: ["400", "500", "700"],
+  variable: "--font-grotesk",
   display: "swap",
 });
 
-// Arabic pairing: Amiri (elegant serif, pairs with Fraunces) + Tajawal (clean sans).
-const amiri = Amiri({
-  subsets: ["arabic", "latin"],
+// Monospace for prices, paging, eyebrows — the "gallery label" voice.
+const mono = Space_Mono({
+  subsets: ["latin"],
   weight: ["400", "700"],
-  variable: "--font-amiri",
+  variable: "--font-mono-face",
+  display: "swap",
+});
+
+// Arabic pairing: Aref Ruqaa (calligraphic display) + Tajawal (clean body).
+const arDisplay = Aref_Ruqaa({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  variable: "--font-ar-display",
   display: "swap",
 });
 
@@ -40,7 +56,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f1e9",
+  themeColor: "#f2ece1",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -52,16 +68,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Per-client accent, injected as CSS variables so the whole palette follows.
-  const brandVars = {
-    "--color-saffron": brand.accent,
-    "--color-saffron-deep": brand.accentDeep,
-  } as React.CSSProperties;
+  // White-label accent: only override the palette default when a client sets one.
+  const brandVars = (
+    brand.accent
+      ? { "--color-saffron": brand.accent, "--color-saffron-deep": brand.accentDeep || brand.accent }
+      : {}
+  ) as React.CSSProperties;
 
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${amiri.variable} ${tajawal.variable}`}
+      className={`${serif.variable} ${grotesk.variable} ${mono.variable} ${arDisplay.variable} ${tajawal.variable}`}
       style={brandVars}
     >
       <body>{children}</body>

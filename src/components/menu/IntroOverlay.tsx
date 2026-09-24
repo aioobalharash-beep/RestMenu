@@ -47,29 +47,20 @@ export default function IntroOverlay() {
             >
               {brand.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={brand.logo} alt={brand.name} className="h-14 w-auto max-w-[220px] object-contain" />
+                <img src={brand.logo} alt={brand.name} className="h-16 w-auto max-w-[240px] object-contain" />
               ) : (
-                <span
-                  className="grid h-14 w-14 place-items-center rounded-full text-shell"
-                  style={{ background: "linear-gradient(140deg, var(--color-saffron), var(--color-saffron-deep))" }}
-                >
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M7 3v7a3 3 0 0 0 6 0V3M10 10v11M18 3c-1.6 0-2.5 2-2.5 5.5S16.4 14 18 14v7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                <span className="font-display text-[2.6rem] leading-none tracking-tight text-ink">
+                  {brand.name}
+                  {brand.tagline && <span className="italic text-saffron"> · {brand.tagline}</span>}
                 </span>
               )}
-              <span className="font-display text-3xl tracking-tight text-ink">
-                {brand.name}
-                {brand.tagline && <span className="italic text-saffron-deep"> · {brand.tagline}</span>}
-              </span>
             </motion.div>
 
             <motion.span
-              className="block h-px w-24 origin-center"
-              style={{ background: "linear-gradient(90deg, transparent, var(--color-saffron-deep), transparent)" }}
+              className="block h-[2px] w-14 origin-center bg-saffron"
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
             />
           </div>
         </motion.div>

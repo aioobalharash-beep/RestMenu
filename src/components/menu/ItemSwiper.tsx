@@ -3,18 +3,18 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
 import type { MenuItem } from "@/lib/types";
-import DishImage, { DishDisc } from "./DishImage";
+import DishImage, { DishFloat } from "./DishImage";
 import { useLang } from "./LanguageContext";
 
 const SWIPE_CONFIDENCE = 8000;
 const power = (offset: number, velocity: number) => Math.abs(offset) * velocity;
 
 /**
- * A coverflow of dishes for one category: the focused dish sits sharp in the
- * centre while the previous and next dishes peek in from the sides, blurred and
- * scaled down, so the scene reads as full. Controlled — the parent owns the
+ * A coverflow of free-floating dishes for one category: the focused dish sits
+ * sharp in the centre while its neighbours peek in from the sides, dimmed and
+ * scaled down, so the spread reads as full. Controlled — the parent owns the
  * active index so the name/description/price stay in lockstep. Supports touch
- * swipe on the centre dish, clicking a side dish, arrows, and keyboard.
+ * swipe on the centre dish, tapping a side dish, arrows, and keyboard.
  */
 export default function ItemSwiper({
   items,
@@ -47,7 +47,6 @@ export default function ItemSwiper({
   useEffect(() => {
     if (!active || count <= 1) return;
     const onKey = (e: KeyboardEvent) => {
-      // In RTL the left/right arrows map to the mirrored direction.
       if (e.key === "ArrowRight") go(rtl ? -1 : 1);
       if (e.key === "ArrowLeft") go(rtl ? 1 : -1);
     };
@@ -66,7 +65,7 @@ export default function ItemSwiper({
       )}
 
       {/* Coverflow stage — overflow visible so neighbours peek at the edges */}
-      <div className="relative mx-auto flex aspect-square w-[min(62vw,30dvh,17rem)] items-center justify-center [overflow:visible]">
+      <div className="relative mx-auto flex aspect-square w-[min(78vw,34dvh,26rem)] items-center justify-center [overflow:visible]">
         {items.map((item, i) => {
           // Shortest signed distance (wraps around for a full stage).
           let d = i - index;
@@ -78,14 +77,13 @@ export default function ItemSwiper({
           const near = Math.abs(d) <= 1;
 
           const style: React.CSSProperties = {
-            transform: `translate(-50%, -50%) translateX(${d * 64 * dirFactor}%) scale(${isCenter ? 1 : 0.64})`,
-            filter: isCenter ? "none" : "blur(3px)",
-            opacity: near ? (isCenter ? 1 : 0.5) : 0,
+            transform: `translate(-50%, -50%) translateX(${d * 68 * dirFactor}%) scale(${isCenter ? 1 : 0.58})`,
+            opacity: near ? (isCenter ? 1 : 0.32) : 0,
             zIndex: isCenter ? 20 : 10 - Math.abs(d),
             pointerEvents: near ? "auto" : "none",
             transition: reduce
               ? "none"
-              : "transform 600ms var(--ease-out-expo), filter 450ms ease, opacity 450ms ease",
+              : "transform 600ms var(--ease-out-expo), opacity 450ms ease",
           };
 
           return (
@@ -104,8 +102,6 @@ export default function ItemSwiper({
                   dragConstraints={{ left: 0, right: 0 }}
                   onDragEnd={(_, info) => {
                     const swipe = power(info.offset.x, info.velocity.x);
-                    // Dragging toward a side brings that side's dish to centre;
-                    // the mapping mirrors in RTL.
                     if (swipe < -SWIPE_CONFIDENCE || info.offset.x < -70) go(rtl ? -1 : 1);
                     else if (swipe > SWIPE_CONFIDENCE || info.offset.x > 70) go(rtl ? 1 : -1);
                   }}
@@ -119,9 +115,12 @@ export default function ItemSwiper({
                   tabIndex={-1}
                   aria-label={`Show ${item.name}`}
                   onClick={() => onIndexChange(i)}
-                  className="h-full w-full"
+                  className="grid h-full w-full place-items-center"
                 >
-                  <DishDisc src={item.imageUrl} alt="" />
+                  {/* Neighbours: dimmed + slightly desaturated so the centre leads */}
+                  <div className="aspect-square w-[78%]" style={{ filter: "grayscale(0.2)" }}>
+                    <DishFloat src={item.imageUrl} alt="" />
+                  </div>
                 </button>
               )}
             </div>
@@ -131,7 +130,7 @@ export default function ItemSwiper({
 
       {/* Dots */}
       {count > 1 && (
-        <div className="mt-5 flex items-center justify-center gap-2">
+        <div className="mt-6 flex items-center justify-center gap-2">
           {items.map((it, i) => (
             <button
               key={it.id}
@@ -141,12 +140,12 @@ export default function ItemSwiper({
               className="focus-ring group grid place-items-center py-1"
             >
               <span
-                className="block h-1.5 rounded-full transition-all duration-500"
+                className="block h-[3px] rounded-full transition-all duration-500"
                 style={{
-                  width: i === index ? 26 : 7,
+                  width: i === index ? 28 : 10,
                   background:
                     i === index
-                      ? "var(--color-saffron-deep)"
+                      ? "var(--color-saffron)"
                       : "color-mix(in srgb, var(--color-ink) 22%, transparent)",
                 }}
               />
@@ -171,16 +170,15 @@ function SwipeArrow({
     <button
       onClick={onClick}
       aria-label={label}
-      className={`focus-ring absolute top-1/2 z-30 hidden -translate-y-1/2 place-items-center rounded-full border border-hairline bg-shell/60 text-ink-soft shadow-soft backdrop-blur-md transition-all hover:scale-105 hover:bg-shell hover:text-ink md:grid ${
-        side === "left" ? "left-0 -translate-x-2" : "right-0 translate-x-2"
-      } h-12 w-12`}
-      style={{ WebkitBackdropFilter: "blur(12px)" }}
+      className={`focus-ring absolute top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-hairline text-ink-soft transition-all hover:border-ink-soft hover:text-ink md:grid ${
+        side === "left" ? "left-0 -translate-x-3" : "right-0 translate-x-3"
+      }`}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
           d={side === "left" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"}
           stroke="currentColor"
-          strokeWidth="1.7"
+          strokeWidth="1.6"
           strokeLinecap="round"
           strokeLinejoin="round"
         />

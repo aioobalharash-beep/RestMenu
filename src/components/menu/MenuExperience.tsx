@@ -6,7 +6,6 @@ import type { Menu } from "@/lib/types";
 import BackgroundField from "./BackgroundField";
 import FloatingLogo from "./FloatingLogo";
 import CategoryScene from "./CategoryScene";
-import ProgressRail from "./ProgressRail";
 import TopControls from "./TopControls";
 import IntroOverlay from "./IntroOverlay";
 import CartWidget from "./CartWidget";
@@ -14,13 +13,14 @@ import { LanguageProvider, useLang } from "./LanguageContext";
 import { CartProvider } from "./CartContext";
 import { brand } from "@/brand.config";
 
-// Each course gets its own ambient hue, cross-faded as you scroll.
+// Each course gets its own ambient hue, cross-faded as you scroll — kept faint
+// so the spotlight behind each dish stays the star.
 const HUES = [
-  "var(--color-saffron)",
+  "var(--color-indigo)",
   "var(--color-clay)",
   "var(--color-sage)",
-  "#b5678a",
-  "#5f8aa8",
+  "var(--color-saffron)",
+  "var(--color-indigo)",
 ];
 
 /** Public entry: provides language (and, when enabled, cart) context. */
@@ -133,7 +133,7 @@ function MenuShell({ menu }: { menu: Menu }) {
             key={hue}
             className="absolute inset-0"
             initial={{ opacity: 0 }}
-            animate={{ opacity: theme === "dark" ? 0.5 : 0.32 }}
+            animate={{ opacity: theme === "dark" ? 0.34 : 0.2 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.1, ease: "easeInOut" }}
             style={{
@@ -147,7 +147,6 @@ function MenuShell({ menu }: { menu: Menu }) {
       <FloatingLogo />
       <TopControls theme={theme} onToggleTheme={toggleTheme} />
       {brand.features.ordering && <CartWidget />}
-      <ProgressRail categories={menu} active={active} onJump={jumpTo} rtl={rtl} />
 
       <div
         ref={scrollRef}
@@ -158,10 +157,13 @@ function MenuShell({ menu }: { menu: Menu }) {
             key={category.id}
             ref={(el) => { sceneRefs.current[i] = el; }}
             sceneIndex={i}
+            total={menu.length}
             category={category}
+            categories={menu}
             next={i < menu.length - 1 ? menu[i + 1] : null}
             active={active === i}
             onJumpNext={() => jumpTo(i + 1)}
+            onJumpTo={jumpTo}
           />
         ))}
       </div>

@@ -1,41 +1,47 @@
 @import "tailwindcss";
 
 /*
-  RestMenu — "light & airy" design system
-  A calm, boutique fine-dining palette: warm porcelain grounds, ink-soft text,
-  a single saffron accent, and generous air. Everything floats.
+  RestMenu — "Muscat Gallery" design system
+  An editorial food-magazine palette: limestone paper, warm ink, a Muscat
+  indigo and an Omani clay. Type leads with an editorial serif + a monospace
+  "gallery label" voice, and Arabic is a first-class display face, not a
+  translation. Dishes float free on the paper; nothing sits on a disc.
 */
 
 @theme {
-  /* Warm porcelain neutrals (not pure grey — a touch of sand) */
-  --color-porcelain: #f6f1e9;
-  --color-porcelain-deep: #efe7db;
-  --color-cream: #fbf8f2;
-  --color-shell: #ffffff;
+  /* Limestone paper neutrals */
+  --color-porcelain: #f2ece1;       /* paper */
+  --color-porcelain-deep: #e7dfd0;  /* paper, one step down */
+  --color-cream: #f7f2ea;           /* lightest paper */
+  --color-shell: #fbf8f2;           /* raised card surface */
 
-  /* Ink — warm near-black, never #000 */
-  --color-ink: #23201b;
-  --color-ink-soft: #4a453d;
-  --color-ink-faint: #8a8378;
+  /* Ink — warm near-black, never pure #000 */
+  --color-ink: #1a1916;
+  --color-ink-soft: #57514a;
+  --color-ink-faint: #928b80;
 
-  /* Saffron accent + supporting warm tones */
-  --color-saffron: #c8873b;
-  --color-saffron-deep: #a86a24;
-  --color-clay: #b9764f;
-  --color-sage: #7d8567;
+  /* Accents. --color-saffron is the white-label primary (clay by default);
+     --color-indigo is the fixed cool counterpoint used for eyebrows/labels. */
+  --color-saffron: #a24a34;         /* clay (primary accent) */
+  --color-saffron-deep: #843a28;
+  --color-clay: #a24a34;
+  --color-indigo: #27356a;
+  --color-sage: #5f6b57;
 
   /* Lines & fills */
-  --color-hairline: rgba(35, 32, 27, 0.10);
-  --color-hairline-soft: rgba(35, 32, 27, 0.06);
+  --color-hairline: rgba(26, 25, 22, 0.14);
+  --color-hairline-soft: rgba(26, 25, 22, 0.08);
 
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, "SFMono-Regular", monospace;
+  --font-mono-face-fallback: ui-monospace, "SFMono-Regular", monospace;
 
   --radius-pill: 999px;
 
-  --shadow-float: 0 40px 80px -30px rgba(60, 45, 25, 0.35);
-  --shadow-lift: 0 20px 45px -20px rgba(60, 45, 25, 0.25);
-  --shadow-soft: 0 8px 24px -12px rgba(60, 45, 25, 0.18);
+  --shadow-float: 0 40px 80px -30px rgba(20, 12, 4, 0.42);
+  --shadow-lift: 0 20px 45px -20px rgba(20, 12, 4, 0.30);
+  --shadow-soft: 0 8px 24px -12px rgba(20, 12, 4, 0.22);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -57,11 +63,10 @@
     background-color: var(--color-porcelain);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv05";
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-saffron) 28%, transparent);
+    background: color-mix(in srgb, var(--color-indigo) 26%, transparent);
     color: var(--color-ink);
   }
 
@@ -70,7 +75,6 @@
     font-weight: 400;
   }
 
-  /* Slimmer, warmer scrollbar */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
@@ -94,23 +98,36 @@
 .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 
+.font-display { font-family: var(--font-display); }
+.font-sans { font-family: var(--font-sans); }
+.font-mono { font-family: var(--font-mono-face); }
+
 /* Evening (dark) theme — scoped to whatever element carries data-theme="dark". */
 [data-theme="dark"] {
-  --color-porcelain: #17130f;
-  --color-porcelain-deep: #201a15;
-  --color-cream: #201a16;
-  --color-shell: #2b241d;
-  --color-ink: #f4ecdf;
-  --color-ink-soft: #ccc0af;
-  --color-ink-faint: #8f8474;
-  --color-hairline: rgba(255, 255, 255, 0.12);
+  --color-porcelain: #111119;
+  --color-porcelain-deep: #14141d;
+  --color-cream: #191922;
+  --color-shell: #1c1c26;
+  --color-ink: #efe7d8;
+  --color-ink-soft: #ada493;
+  --color-ink-faint: #7d7568;
+  --color-saffron: #cf6d4f;
+  --color-saffron-deep: #b85a3e;
+  --color-clay: #cf6d4f;
+  --color-indigo: #8ea1e0;
+  --color-sage: #8a9a86;
+  --color-hairline: rgba(255, 255, 255, 0.13);
   --color-hairline-soft: rgba(255, 255, 255, 0.07);
   color-scheme: dark;
 }
 [data-theme="dark"] .paper-grain::before {
   mix-blend-mode: screen;
-  opacity: 0.04;
+  opacity: 0.05;
 }
+
+/* Free-floating dish drop-shadow (traces the food via its alpha channel). */
+.dish-shadow { filter: drop-shadow(0 34px 38px rgba(20, 12, 4, 0.42)); }
+[data-theme="dark"] .dish-shadow { filter: drop-shadow(0 38px 46px rgba(0, 0, 0, 0.6)); }
 
 /* Rising steam for hot items */
 @keyframes steamRise {
@@ -121,10 +138,12 @@
 
 /* Arabic: swap the display/body fonts for the whole subtree. */
 .lang-ar {
-  --font-display: var(--font-amiri), ui-serif, Georgia, serif;
+  --font-display: var(--font-ar-display), "Times New Roman", serif;
   --font-sans: var(--font-tajawal), ui-sans-serif, system-ui, sans-serif;
 }
 .lang-ar :is(h1, h2, h3, h4) { line-height: 1.2; }
+/* Latin bits inside an Arabic layout (prices, paging) keep the mono voice. */
+.lang-ar .font-mono { font-family: var(--font-mono-face); }
 
 /* Admin form input */
 .input {
@@ -140,13 +159,9 @@
 }
 .input::placeholder { color: var(--color-ink-faint); }
 .input:focus-visible {
-  border-color: var(--color-saffron);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-saffron) 22%, transparent);
+  border-color: var(--color-indigo);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-indigo) 22%, transparent);
 }
-
-/* Fluid display type */
-.font-display { font-family: var(--font-display); }
-.font-sans { font-family: var(--font-sans); }
 
 /* Grain / paper texture overlay (very subtle) */
 .paper-grain::before {
@@ -155,14 +170,15 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.04;
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }
 
 /* Focus ring — accessible + on-brand */
 .focus-ring:focus-visible {
-  outline: 2px solid var(--color-saffron);
+  outline: 2px solid var(--color-indigo);
   outline-offset: 2px;
   border-radius: 6px;
 }

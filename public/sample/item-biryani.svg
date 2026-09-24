@@ -1,15 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
   <defs>
-    <radialGradient id="pl" cx="50%" cy="42%" r="62%">
-      <stop offset="0%" stop-color="#fbf3df"/>
-      <stop offset="100%" stop-color="#eeddb6"/>
+    <radialGradient id="plate" cx="50%" cy="44%" r="58%">
+      <stop offset="0%" stop-color="#f8f2e7"/>
+      <stop offset="78%" stop-color="#f0e7d6"/>
+      <stop offset="100%" stop-color="#e6dcc8"/>
     </radialGradient>
-    <radialGradient id="rim" cx="50%" cy="50%" r="50%">
-      <stop offset="86%" stop-color="rgba(0,0,0,0)"/>
-      <stop offset="93%" stop-color="rgba(120,90,50,0.10)"/>
-      <stop offset="100%" stop-color="rgba(120,90,50,0)"/>
+    <radialGradient id="well" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#fbf6ec"/>
+      <stop offset="100%" stop-color="#f1e8d8"/>
     </radialGradient>
   </defs>
-  <rect width="600" height="600" fill="url(#pl)"/>
-  <circle cx="300" cy="300" r="300" fill="url(#rim)"/>
-  <circle cx="300" cy="300" r="240" fill="none" stroke="rgba(120,90,50,0.10)" stroke-width="2"/><circle cx="298.8" cy="301.5" r="48.2" fill="#e3b84f" opacity="0.92"/><circle cx="325.5" cy="214.6" r="92.5" fill="#d99b3a" opacity="0.92"/><circle cx="254.2" cy="337.3" r="68.4" fill="#8a4b2a" opacity="0.92"/><circle cx="399.2" cy="339.8" r="50.0" fill="#e3b84f" opacity="0.92"/><circle cx="274.9" cy="308.9" r="79.4" fill="#d99b3a" opacity="0.92"/><circle cx="223.1" cy="233.3" r="3.1" fill="rgba(90,120,70,0.7)"/><circle cx="335.9" cy="315.1" r="4.2" fill="rgba(90,120,70,0.7)"/><circle cx="423.9" cy="324.9" r="6.1" fill="rgba(90,120,70,0.7)"/><circle cx="295.1" cy="286.7" r="5.1" fill="rgba(90,120,70,0.7)"/><circle cx="303.5" cy="243.5" r="6.6" fill="rgba(90,120,70,0.7)"/><circle cx="250.5" cy="340.2" r="3.4" fill="rgba(90,120,70,0.7)"/><circle cx="321.6" cy="298.6" r="6.7" fill="rgba(90,120,70,0.7)"/></svg>
+  <!-- transparent background: only the plate is drawn, so it floats -->
+  <circle cx="300" cy="300" r="252" fill="url(#plate)"/>
+  <circle cx="300" cy="300" r="252" fill="none" stroke="rgba(26,25,22,0.10)" stroke-width="2"/>
+  <circle cx="300" cy="298" r="196" fill="url(#well)"/>
+  <circle cx="300" cy="298" r="196" fill="none" stroke="rgba(26,25,22,0.06)" stroke-width="2"/>
+  <g><g opacity="0.94"><circle cx="305.1" cy="318.6" r="32.8" fill="#d79a3f"/><circle cx="305.9" cy="303.8" r="25.1" fill="#d79a3f"/><circle cx="293.6" cy="303.0" r="28.1" fill="#d79a3f"/><circle cx="304.6" cy="300.8" r="35.7" fill="#d79a3f"/><circle cx="319.9" cy="305.3" r="35.0" fill="#d79a3f"/></g><g opacity="0.99"><circle cx="332.3" cy="219.8" r="60.0" fill="#d79a3f"/><circle cx="322.3" cy="223.9" r="34.2" fill="#d79a3f"/><circle cx="334.9" cy="216.2" r="57.0" fill="#d79a3f"/><circle cx="315.7" cy="196.3" r="39.4" fill="#d79a3f"/></g><g opacity="0.96"><circle cx="197.3" cy="363.1" r="44.2" fill="#d79a3f"/><circle cx="209.4" cy="371.4" r="37.4" fill="#d79a3f"/><circle cx="208.4" cy="369.9" r="42.1" fill="#d79a3f"/></g><g opacity="0.99"><circle cx="243.3" cy="259.2" r="55.9" fill="#e6d4a8"/><circle cx="239.5" cy="251.9" r="36.6" fill="#e6d4a8"/><circle cx="222.4" cy="267.0" r="34.6" fill="#e6d4a8"/><circle cx="238.7" cy="250.3" r="49.1" fill="#e6d4a8"/><circle cx="240.1" cy="267.6" r="53.5" fill="#e6d4a8"/></g><g opacity="0.93"><circle cx="197.0" cy="237.2" r="49.0" fill="#7d8f52"/><circle cx="241.3" cy="263.9" r="58.3" fill="#7d8f52"/><circle cx="224.7" cy="244.6" r="45.9" fill="#7d8f52"/><circle cx="229.2" cy="258.8" r="43.8" fill="#7d8f52"/><circle cx="225.3" cy="245.1" r="43.1" fill="#7d8f52"/></g><g opacity="0.94"><circle cx="191.3" cy="326.3" r="24.7" fill="#7d8f52"/><circle cx="197.5" cy="334.6" r="26.5" fill="#7d8f52"/><circle cx="192.1" cy="317.2" r="28.2" fill="#7d8f52"/></g><g opacity="0.88"><circle cx="181.9" cy="312.0" r="32.5" fill="#7d8f52"/><circle cx="213.3" cy="329.5" r="57.2" fill="#7d8f52"/><circle cx="196.2" cy="312.3" r="39.2" fill="#7d8f52"/><circle cx="199.6" cy="339.4" r="33.7" fill="#7d8f52"/></g></g>
+</svg>

@@ -1,15 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
   <defs>
-    <radialGradient id="pl" cx="50%" cy="42%" r="62%">
-      <stop offset="0%" stop-color="#fbf6ec"/>
-      <stop offset="100%" stop-color="#f0e6d4"/>
+    <radialGradient id="plate" cx="50%" cy="44%" r="58%">
+      <stop offset="0%" stop-color="#f8f2e7"/>
+      <stop offset="78%" stop-color="#f0e7d6"/>
+      <stop offset="100%" stop-color="#e6dcc8"/>
     </radialGradient>
-    <radialGradient id="rim" cx="50%" cy="50%" r="50%">
-      <stop offset="86%" stop-color="rgba(0,0,0,0)"/>
-      <stop offset="93%" stop-color="rgba(120,90,50,0.10)"/>
-      <stop offset="100%" stop-color="rgba(120,90,50,0)"/>
+    <radialGradient id="well" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#fbf6ec"/>
+      <stop offset="100%" stop-color="#f1e8d8"/>
     </radialGradient>
   </defs>
-  <rect width="600" height="600" fill="url(#pl)"/>
-  <circle cx="300" cy="300" r="300" fill="url(#rim)"/>
-  <circle cx="300" cy="300" r="240" fill="none" stroke="rgba(120,90,50,0.10)" stroke-width="2"/><circle cx="324.8" cy="303.0" r="56.2" fill="#f6e7c9" opacity="0.92"/><circle cx="303.4" cy="334.2" r="54.6" fill="#efd9ad" opacity="0.92"/><circle cx="330.0" cy="210.2" r="72.8" fill="#f3efe0" opacity="0.92"/><circle cx="373.6" cy="363.1" r="64.6" fill="#f6e7c9" opacity="0.92"/><circle cx="336.5" cy="311.9" r="79.7" fill="#efd9ad" opacity="0.92"/><circle cx="256.3" cy="313.8" r="3.5" fill="rgba(90,120,70,0.7)"/><circle cx="297.4" cy="292.5" r="3.9" fill="rgba(90,120,70,0.7)"/><circle cx="398.4" cy="347.0" r="3.4" fill="rgba(90,120,70,0.7)"/><circle cx="302.9" cy="312.0" r="5.2" fill="rgba(90,120,70,0.7)"/><circle cx="328.8" cy="211.1" r="4.5" fill="rgba(90,120,70,0.7)"/><circle cx="208.2" cy="381.3" r="4.5" fill="rgba(90,120,70,0.7)"/><circle cx="322.9" cy="246.5" r="6.6" fill="rgba(90,120,70,0.7)"/></svg>
+  <!-- transparent background: only the plate is drawn, so it floats -->
+  <circle cx="300" cy="300" r="252" fill="url(#plate)"/>
+  <circle cx="300" cy="300" r="252" fill="none" stroke="rgba(26,25,22,0.10)" stroke-width="2"/>
+  <circle cx="300" cy="298" r="196" fill="url(#well)"/>
+  <circle cx="300" cy="298" r="196" fill="none" stroke="rgba(26,25,22,0.06)" stroke-width="2"/>
+  <g><g opacity="0.94"><circle cx="202.0" cy="262.9" r="29.0" fill="#c8b48f"/><circle cx="186.1" cy="279.6" r="40.3" fill="#c8b48f"/><circle cx="228.1" cy="258.8" r="51.3" fill="#c8b48f"/><circle cx="219.7" cy="286.8" r="53.1" fill="#c8b48f"/></g><g opacity="0.99"><circle cx="321.9" cy="281.2" r="35.4" fill="#c8b48f"/><circle cx="316.9" cy="302.5" r="31.1" fill="#c8b48f"/><circle cx="326.9" cy="312.3" r="38.9" fill="#c8b48f"/></g><g opacity="0.87"><circle cx="261.3" cy="242.9" r="43.0" fill="#efe6d3"/><circle cx="269.5" cy="249.8" r="44.0" fill="#efe6d3"/><circle cx="266.8" cy="260.9" r="40.8" fill="#efe6d3"/></g><g opacity="0.87"><circle cx="326.9" cy="246.7" r="31.1" fill="#c8b48f"/><circle cx="323.7" cy="252.7" r="27.9" fill="#c8b48f"/><circle cx="333.2" cy="252.7" r="39.2" fill="#c8b48f"/><circle cx="333.9" cy="257.7" r="39.5" fill="#c8b48f"/></g><g opacity="0.89"><circle cx="406.0" cy="268.4" r="24.6" fill="#efe6d3"/><circle cx="396.5" cy="252.4" r="38.8" fill="#efe6d3"/><circle cx="398.2" cy="251.8" r="48.5" fill="#efe6d3"/></g><g opacity="0.90"><circle cx="350.5" cy="296.3" r="37.4" fill="#d99a4e"/><circle cx="328.2" cy="320.5" r="49.0" fill="#d99a4e"/><circle cx="350.6" cy="285.0" r="33.9" fill="#d99a4e"/><circle cx="338.0" cy="291.8" r="49.4" fill="#d99a4e"/></g><g opacity="0.88"><circle cx="306.9" cy="304.3" r="25.2" fill="#d99a4e"/><circle cx="299.7" cy="300.2" r="26.2" fill="#d99a4e"/><circle cx="302.0" cy="300.4" r="36.4" fill="#d99a4e"/></g><g opacity="0.91"><circle cx="297.8" cy="333.6" r="54.3" fill="#efe6d3"/><circle cx="335.1" cy="329.4" r="35.5" fill="#efe6d3"/><circle cx="315.5" cy="316.1" r="55.5" fill="#efe6d3"/><circle cx="292.2" cy="303.9" r="32.0" fill="#efe6d3"/><circle cx="314.9" cy="315.4" r="34.7" fill="#efe6d3"/></g></g>
+</svg>
