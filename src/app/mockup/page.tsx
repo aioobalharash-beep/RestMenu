@@ -21,17 +21,20 @@ const mono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: 
 const arDisplay = Aref_Ruqaa({ subsets: ["arabic"], weight: ["400", "700"], variable: "--f-ar" });
 const arBody = Tajawal({ subsets: ["arabic"], weight: ["400", "500"], variable: "--f-arbody" });
 
-const STAR =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='54' height='54'%3E%3Cg fill='none' stroke='%2327356a' stroke-width='1'%3E%3Crect x='15' y='15' width='24' height='24'/%3E%3Crect x='15' y='15' width='24' height='24' transform='rotate(45 27 27)'/%3E%3C/g%3E%3C/svg%3E";
+// Fine fractal-noise texture for the "grain" background option.
+const GRAIN =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
 
 export default function Mockup() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [lang, setLang] = useState<"en" | "ar">("en");
+  const [bg, setBg] = useState<string>("none");
 
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     if (p.get("theme") === "dark") setTheme("dark");
     if (p.get("lang") === "ar") setLang("ar");
+    if (p.get("bg")) setBg(p.get("bg")!);
   }, []);
 
   const rtl = lang === "ar";
@@ -45,8 +48,7 @@ export default function Mockup() {
     >
       <style>{css}</style>
 
-      <div className="scene">
-        <div className="pattern" />
+      <div className={`scene bg-${bg}`}>
         <div className="index-numeral">{rtl ? "٠٢" : "02"}</div>
 
         {/* running header */}
@@ -63,15 +65,9 @@ export default function Mockup() {
             <div className="eyebrow">{t("Course 02 — Main Dishes", "الطبق ٠٢ — الأطباق الرئيسية")}</div>
 
             {rtl ? (
-              <>
-                <h1 className="name-ar">كبسة اللحم</h1>
-                <div className="name-en">Beef Kabsa</div>
-              </>
+              <h1 className="name-ar">كبسة اللحم</h1>
             ) : (
-              <>
-                <h1 className="name-en-lead">Beef Kabsa</h1>
-                <div className="name-ar-sub">كبسة اللحم</div>
-              </>
+              <h1 className="name-en-lead">Beef Kabsa</h1>
             )}
 
             <p className="desc">
@@ -138,8 +134,31 @@ const css = `
 .mk { min-height:100vh; background:var(--paper); color:var(--ink); font-family:var(--f-g); }
 .mk.ar { font-family:var(--f-ab); }
 .scene { position:relative; min-height:100vh; padding:40px 64px 32px; overflow:hidden; display:flex; flex-direction:column; }
-.pattern { position:absolute; inset:0; background-image:url("${STAR}"); background-size:54px 54px; opacity:.05; pointer-events:none; }
-.mk[data-theme="dark"] .pattern { opacity:.08; filter:invert(1); }
+
+/* ---- Background options (choose one) ---- */
+/* A — Spotlight: a single soft pool of light behind the dish */
+.bg-spotlight::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(52% 46% at 68% 46%, color-mix(in srgb, var(--clay) 20%, transparent), transparent 72%); }
+.mk[data-theme="dark"] .bg-spotlight::before {
+  background:radial-gradient(52% 46% at 68% 44%, color-mix(in srgb, var(--indigo) 40%, transparent), transparent 70%); }
+.mk.ar .bg-spotlight::before { background-position-x:32%; }
+
+/* B — Grain: fine analog paper/film texture, no motif */
+.bg-grain::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:url("${GRAIN}"); background-size:160px 160px; opacity:.5; mix-blend-mode:multiply; }
+.mk[data-theme="dark"] .bg-grain::before { opacity:.14; mix-blend-mode:screen; }
+
+/* C — Editorial grid: hairline magazine column rules */
+.bg-grid::before { content:""; position:absolute; inset:40px 64px; z-index:0; pointer-events:none;
+  background-image:linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size:calc(100%/5) 100%; opacity:.7; }
+
+/* D — Tonal wash: soft vertical gradient + edge vignette, dish floats in light */
+.bg-wash::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--paper-2) 70%, transparent), transparent 45%),
+             radial-gradient(120% 90% at 50% 40%, transparent 55%, color-mix(in srgb, var(--ink) 12%, transparent)); }
+.mk[data-theme="dark"] .bg-wash::before {
+  background:linear-gradient(180deg, color-mix(in srgb, var(--paper-2) 90%, transparent), transparent 45%),
+             radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(0,0,0,.55)); }
 
 .index-numeral { position:absolute; top:-4%; inset-inline-start:2%; font-family:var(--f-serif-s); font-size:34vh; line-height:1; color:var(--ink); opacity:.045; pointer-events:none; }
 
@@ -200,6 +219,7 @@ const css = `
   .rule { margin-inline:auto; }
   .price-row { justify-content:center; }
   .courses { align-items:center; }
+  .eyebrow { display:none; }
   .dishwrap { order:1; height:44vh; }
   .dish { width:74vw; max-height:42vh; }
   .neighbor { display:none; }
