@@ -79,6 +79,31 @@ Deploy. The build auto-creates the tables and seeds the sample menu.
 - Give the client: the menu URL, `/admin` URL, their admin password, and a short how-to.
 - Store their secrets in your password manager. Never commit secrets.
 
+## 8. Pre-handover QA (polish that's baked into the template)
+The template already ships these fixes — verify they still hold after a rebrand,
+since new fonts / a longer brand name can re-trigger the layout ones. Test on a
+real phone (or a 390×844 viewport):
+
+- **No first-paint flash.** The intro loader (`IntroOverlay.tsx`) starts visible
+  and is dropped before paint on repeat visits / reduced motion, so the menu
+  never flashes underneath before the loader. If you change the intro, keep the
+  `useState(true)` + isomorphic-layout-effect pattern.
+- **Loader is centered & responsive.** The brand wordmark uses
+  `text-[clamp(...)] text-balance` inside a centered, `max-w-[86vw]` block. After
+  setting a long `brand.name`/`tagline`, confirm it stays centered and doesn't
+  overflow the edges on a phone.
+- **Price is above the fold on mobile.** The scene top-aligns and tightens on
+  mobile (`CategoryScene` `content-start`), the focused dish shrinks
+  (`ItemSwiper` `w-[min(66vw,34dvh)] md:…`), and the description is
+  `line-clamp-3` on mobile (`ItemDetails`) so the dish name + price show without
+  scrolling. Re-check after changing fonts or dish sizing.
+- **Category numbers come from the title only.** The running header shows the
+  category name exactly as typed in `/admin`. Do not hardcode auto-numbers; if a
+  client wants "No. 04 — …", they type it into the category name. (If a preset
+  adds an auto issue-number, gate it behind a `brand.config` flag, off by default.)
+- **Both themes + Arabic (RTL).** Toggle light/evening and EN/ع; confirm the
+  layout mirrors and nothing clips.
+
 ---
 
 ## Notes
