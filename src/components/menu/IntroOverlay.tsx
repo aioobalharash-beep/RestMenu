@@ -1,29 +1,40 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { brand } from "@/brand.config";
 
-/** A one-time cinematic brand reveal on first load (per session). */
+// Runs before the browser paints on the client (so a repeat visitor never sees
+// a flash of the overlay), and falls back to useEffect during SSR.
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+/**
+ * A one-time cinematic brand reveal on first load (per session). It starts
+ * visible so it covers the very first paint — no flash of the menu underneath —
+ * then decides synchronously whether to keep it (first visit) or drop it before
+ * paint (already seen, or reduced motion).
+ */
 export default function IntroOverlay() {
   const reduce = useReducedMotion();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     let seen = false;
     try {
       seen = sessionStorage.getItem("rm_intro") === "1";
     } catch {
       /* ignore */
     }
-    if (seen || reduce) return;
-    setShow(true);
+    if (seen || reduce) {
+      setShow(false);
+      return;
+    }
     try {
       sessionStorage.setItem("rm_intro", "1");
     } catch {
       /* ignore */
     }
-    const t = setTimeout(() => setShow(false), 2000);
+    const t = setTimeout(() => setShow(false), 1900);
     return () => clearTimeout(t);
   }, [reduce]);
 
@@ -31,14 +42,14 @@ export default function IntroOverlay() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[60] grid place-items-center"
+          className="fixed inset-0 z-[60] grid place-items-center px-6 text-center"
           style={{ background: "var(--color-porcelain)" }}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           onClick={() => setShow(false)}
         >
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex max-w-[86vw] flex-col items-center gap-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.82, y: 6 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -47,9 +58,9 @@ export default function IntroOverlay() {
             >
               {brand.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={brand.logo} alt={brand.name} className="h-16 w-auto max-w-[240px] object-contain" />
+                <img src={brand.logo} alt={brand.name} className="h-14 w-auto max-w-[220px] object-contain sm:h-16" />
               ) : (
-                <span className="font-display text-[2.6rem] leading-none tracking-tight text-ink">
+                <span className="text-balance font-display text-[clamp(1.9rem,8vw,2.8rem)] leading-tight tracking-tight text-ink">
                   {brand.name}
                   {brand.tagline && <span className="italic text-saffron"> · {brand.tagline}</span>}
                 </span>

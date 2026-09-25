@@ -64,7 +64,7 @@ const CategoryScene = forwardRef<
       </div>
 
       {/* Stage */}
-      <div className="relative z-10 grid flex-1 items-center gap-x-8 gap-y-4 md:grid-cols-[0.92fr_1.3fr] lg:gap-x-12">
+      <div className="relative z-10 grid flex-1 content-start items-center gap-x-8 gap-y-3 md:content-center md:gap-y-4 md:grid-cols-[0.92fr_1.3fr] lg:gap-x-12">
         {/* Copy */}
         <div className="order-2 md:order-1">
           {item ? (

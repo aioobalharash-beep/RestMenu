@@ -27,20 +27,20 @@ export default function ItemDetails({ item }: { item: MenuItem }) {
           <h1
             className={`font-display leading-[0.98] text-ink ${
               rtl
-                ? "text-[clamp(3rem,7vw,5.2rem)]"
-                : "italic text-[clamp(2.6rem,6vw,4.9rem)] tracking-[-0.01em]"
+                ? "text-[clamp(2.6rem,7vw,5.2rem)]"
+                : "italic text-[clamp(2.3rem,6vw,4.9rem)] tracking-[-0.01em]"
             }`}
           >
             {pick(item.name, item.nameAr)}
           </h1>
 
           {desc && (
-            <p className="text-pretty mt-5 max-w-md text-[1rem] leading-relaxed text-ink-soft">
+            <p className="text-pretty mt-3 line-clamp-3 max-w-md text-[0.95rem] leading-relaxed text-ink-soft md:mt-5 md:line-clamp-none md:text-[1rem]">
               {desc}
             </p>
           )}
 
-          <div className="mt-7">
+          <div className="mt-5 md:mt-7">
             <PriceTag priceBaisa={item.priceBaisa} />
           </div>
 

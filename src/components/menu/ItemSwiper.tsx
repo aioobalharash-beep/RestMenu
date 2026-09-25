@@ -65,7 +65,7 @@ export default function ItemSwiper({
       )}
 
       {/* Coverflow stage — overflow visible so neighbours peek at the edges */}
-      <div className="relative mx-auto flex aspect-square w-[min(88vw,54dvh,34rem)] items-center justify-center [overflow:visible]">
+      <div className="relative mx-auto flex aspect-square w-[min(66vw,34dvh)] items-center justify-center [overflow:visible] md:w-[min(52dvh,32rem)]">
         {items.map((item, i) => {
           // Shortest signed distance (wraps around for a full stage).
           let d = i - index;
